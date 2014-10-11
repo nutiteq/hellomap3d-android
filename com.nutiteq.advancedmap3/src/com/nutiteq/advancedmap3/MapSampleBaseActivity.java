@@ -50,7 +50,7 @@ public class MapSampleBaseActivity extends Activity {
         
         // General options
         mapView.getOptions().setTileDrawSize(256);
-//        mapView.getOptions().setTileThreadPoolSize(4);
+        mapView.getOptions().setTileThreadPoolSize(4); 
 
         // Review following and change if needed
         mapView.getOptions().setRotatable(true);
@@ -80,14 +80,13 @@ public class MapSampleBaseActivity extends Activity {
             // we don't use vectorTileDataSource directly (this would be also option),
             // but via caching to cache data locally persistently
             // Note that this requires WRITE_EXTERNAL_STORAGE permission
-            // FIXME jaak: persistent caching seems to be unstable currently, disabled here
             String cacheFile = getExternalFilesDir(null)+"/mapcache.db";
             Log.i(Const.LOG_TAG,"cacheFile = "+cacheFile);
             PersistentCacheTileDataSource cachedDataSource = 
                     new PersistentCacheTileDataSource(vectorTileDataSource, cacheFile);
             
             baseLayer = new VectorTileLayer(
-                    vectorTileDataSource, vectorTileDecoder);
+                    cachedDataSource, vectorTileDecoder);
             mapView.getLayers().add(baseLayer);
         }else
         {

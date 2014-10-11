@@ -9,8 +9,6 @@ import android.util.Log;
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.MBTilesTileDataSource;
 import com.nutiteq.hellomap3.util.AssetCopy;
-import com.nutiteq.layers.TileLayer;
-import com.nutiteq.layers.VectorLayer;
 import com.nutiteq.layers.VectorTileLayer;
 
 /**
@@ -27,12 +25,10 @@ public class OfflineVectorMapActivity extends MapSampleBaseActivity {
         super.onCreate(savedInstanceState);
         
         // offline map data source
-        
-//        MBTilesTileDataSource vectorTileDataSource = null;
-        String mbTileFile = "osmworld_0_4_ntvt.mbtiles";
+        String mbTileFile = "world_ntvt_0_4.mbtiles";
 
         try {
-            String localDir = Environment.getExternalStorageDirectory().toString();
+            String localDir = getExternalFilesDir(null).toString();
             AssetCopy.copyAssetToSDCard(getAssets(), mbTileFile, localDir);
             Log.i(Const.LOG_TAG,"copy done to " + localDir + "/"
                     + mbTileFile);
@@ -43,15 +39,12 @@ public class OfflineVectorMapActivity extends MapSampleBaseActivity {
                     vectorTileDataSource, vectorTileDecoder);
             mapView.getLayers().add(baseLayer);
             
-            mapView.getOptions().setZoomRange(new MapRange(0,8));
+            mapView.getOptions().setZoomRange(new MapRange(0,5));
             
         } catch (IOException e) {
             Log.e(Const.LOG_TAG, "mbTileFile cannot be copied: "+mbTileFile);
             Log.e(Const.LOG_TAG, e.getLocalizedMessage());
         }
-        
-        
-        
         
     }
 }
