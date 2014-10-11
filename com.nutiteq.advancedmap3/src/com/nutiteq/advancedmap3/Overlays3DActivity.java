@@ -81,10 +81,12 @@ public class Overlays3DActivity extends MapSampleBaseActivity {
         // The NMLDB file must be copied to sdcard first. 3D city files can be very big and 
         // there's no way to open files from the bundle without fully extracting them to memory.
         String fileName = "saku_ios_4bpp.nmldb"; 
+        String dir = Environment.getExternalStorageDirectory().toString();
         try {
-            AssetCopy.copyAssetToSDCard(getAssets(), fileName);
-
-            NMLModelLODTreeDataSource nmlDataSource = new NMLModelLODTreeSqliteDataSource(baseProjection, Environment.getExternalStorageDirectory() + "/" + fileName);
+            AssetCopy.copyAssetToSDCard(getAssets(), fileName, dir);
+            Log.i(Const.LOG_TAG,"copy done to " + dir + "/"
+                    + fileName);
+            NMLModelLODTreeDataSource nmlDataSource = new NMLModelLODTreeSqliteDataSource(baseProjection, dir + "/" + fileName);
             NMLModelLODTreeLayer nmlLayer = new NMLModelLODTreeLayer(nmlDataSource);
             nmlLayer.setVisibleZoomRange(new MapRange(12.0f, 25.0f));
             mapView.getLayers().add(nmlLayer);

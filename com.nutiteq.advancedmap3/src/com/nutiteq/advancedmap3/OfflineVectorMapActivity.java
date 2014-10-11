@@ -32,10 +32,11 @@ public class OfflineVectorMapActivity extends MapSampleBaseActivity {
         String mbTileFile = "osmworld_0_4_ntvt.mbtiles";
 
         try {
-            AssetCopy.copyAssetToSDCard(getAssets(), mbTileFile);
-            Log.i(Const.LOG_TAG,"copy done to " +  getExternalFilesDir(null) + "/"
+            String localDir = Environment.getExternalStorageDirectory().toString();
+            AssetCopy.copyAssetToSDCard(getAssets(), mbTileFile, localDir);
+            Log.i(Const.LOG_TAG,"copy done to " + localDir + "/"
                     + mbTileFile);
-            MBTilesTileDataSource vectorTileDataSource = new MBTilesTileDataSource(0, 4, getExternalFilesDir(null) + "/"
+            MBTilesTileDataSource vectorTileDataSource = new MBTilesTileDataSource(0, 4, localDir + "/"
                     + mbTileFile);
             mapView.getLayers().remove(baseLayer);
             baseLayer = new VectorTileLayer(

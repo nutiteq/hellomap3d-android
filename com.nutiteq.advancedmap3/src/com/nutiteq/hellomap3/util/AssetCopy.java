@@ -6,17 +6,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.nutiteq.advancedmap3.Const;
-
 import android.content.res.AssetManager;
-import android.os.Environment;
 import android.util.Log;
+
+import com.nutiteq.advancedmap3.Const;
 
 
 public class AssetCopy {
-    public static void copyAssetToSDCard(AssetManager assetManager, String fileName) throws IOException {
+    public static void copyAssetToSDCard(AssetManager assetManager, String fileName, String toDir) throws IOException {
             InputStream in = assetManager.open(fileName);
-            File outFile = new File(Environment.getExternalStorageDirectory(), fileName);
+            File outFile = new File(toDir, fileName);
             // TODO jaak - check if storage is available and has enough space 
             if(outFile.exists()){
                 Log.d(Const.LOG_TAG, "file already exits: "+outFile.getAbsolutePath());

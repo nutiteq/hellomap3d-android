@@ -2,7 +2,6 @@ package com.nutiteq.advancedmap3;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 
 import com.nutiteq.core.MapPos;
@@ -13,6 +12,7 @@ import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.TileLayer;
 import com.nutiteq.layers.VectorTileLayer;
 import com.nutiteq.projections.EPSG3857;
+import com.nutiteq.projections.Projection;
 import com.nutiteq.ui.MapView;
 import com.nutiteq.utils.AssetUtils;
 import com.nutiteq.vectortiles.MBVectorTileDecoder;
@@ -29,7 +29,7 @@ import com.nutiteq.wrappedcommons.UnsignedCharVector;
 public class MapSampleBaseActivity extends Activity {
 
     protected MapView mapView;
-    protected EPSG3857 baseProjection;
+    protected Projection baseProjection;
     protected TileLayer baseLayer;
     protected MBVectorTileDecoder vectorTileDecoder;
 
