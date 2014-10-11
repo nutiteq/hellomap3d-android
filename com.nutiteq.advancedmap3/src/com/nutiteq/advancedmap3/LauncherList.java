@@ -29,6 +29,7 @@ public class LauncherList extends ListActivity{
             {MapListenerActivity.class,null},
             {Overlays3DActivity.class,null},
             {OfflineVectorMapActivity.class,null},
+            {AnimatedRasterMapActivity.class,null},
     };
 
     @Override
