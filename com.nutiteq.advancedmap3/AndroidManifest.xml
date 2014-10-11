@@ -30,6 +30,7 @@
         <activity android:name="com.nutiteq.advancedmap3.Overlays3DActivity" />
         <activity android:name="com.nutiteq.advancedmap3.OfflineVectorMapActivity" />
         <activity android:name="com.nutiteq.advancedmap3.AnimatedRasterMapActivity" />
+        <activity android:name="com.nutiteq.advancedmap3.RasterOverlayActivity" />
     </application>
 
 </manifest>
