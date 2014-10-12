@@ -28,9 +28,11 @@ public class MyMapEventListener extends MapEventListener {
 		this.vectorDataSource = vectorDataSource;
 	}
 
+	@Override
 	public void onMapMoved() {
 	}
 
+	@Override
 	public void onMapClicked(MapClickInfo mapClickInfo) {
 		Log.d(Const.LOG_TAG, "Map click!");
 		
@@ -67,6 +69,7 @@ public class MyMapEventListener extends MapEventListener {
 		oldClickLabel = clickPopup;
 }
 
+	@Override
 	public void onVectorElementClicked(VectorElementsClickInfo vectorElementsClickInfo) {
 		Log.d(Const.LOG_TAG, "Vector element click!");
 		

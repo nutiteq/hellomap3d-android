@@ -50,7 +50,7 @@ public class MapSampleBaseActivity extends Activity {
         
         // General options
         mapView.getOptions().setTileDrawSize(256);
-        mapView.getOptions().setTileThreadPoolSize(4); 
+//        mapView.getOptions().setTileThreadPoolSize(4); 
 
         // Review following and change if needed
         mapView.getOptions().setRotatable(true);

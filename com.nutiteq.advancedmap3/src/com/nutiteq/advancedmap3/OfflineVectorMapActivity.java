@@ -70,7 +70,7 @@ public class OfflineVectorMapActivity extends MapSampleBaseActivity {
 
         switch (item.getItemId()) {
 
-        // map types
+        // map styles
         case R.id.menu_osmbright:
             changeBaseMapStyle("osmbright.zip");
             break;
