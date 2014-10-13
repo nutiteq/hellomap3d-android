@@ -1,14 +1,17 @@
-hellomap3d-android
-==================
+# Android sample app with Nutiteq SDK 3.0
 
-Android sample app with Nutiteq SDK 3.0
 
 This project shows API and features of Nutiteq Maps SDK 3.0.
 
-## com.nutiteq.hellomap3
+## Download and documentation
+  * Download - get libs/ folder from any sample project
+  * [Browse API JavaDoc](https://github.com/nutiteq/hellomap3d-android)
+
+## Samples
+### com.nutiteq.hellomap3
 Shows minimal map features: create a map (using online vector base) and add a pin
 
-## com.nutiteq.advancedmap3
+### com.nutiteq.advancedmap3
 There is more configuration for map to control and maximize performance. Default background map is online vector map.
 
  1. Basic pin map, same as hellomap3d
