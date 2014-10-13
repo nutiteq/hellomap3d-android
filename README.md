@@ -5,7 +5,7 @@ This project shows API and features of Nutiteq Maps SDK 3.0.
 
 ## Download and documentation
   * Download - get libs/ folder from any sample project
-  * [Browse API JavaDoc](https://github.com/nutiteq/hellomap3d-android)
+  * [Browse API JavaDoc](http://nutiteq.github.io/hellomap3d-android/)
 
 ## Samples
 ### com.nutiteq.hellomap3
