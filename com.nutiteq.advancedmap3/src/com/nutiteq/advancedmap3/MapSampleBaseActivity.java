@@ -32,6 +32,8 @@ public class MapSampleBaseActivity extends Activity {
     protected Projection baseProjection;
     protected TileLayer baseLayer;
     protected MBVectorTileDecoder vectorTileDecoder;
+    protected String tileUrl = Const.NUTITEQ_URL;
+    protected String vectorStyle = Const.VECTOR_STYLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +70,13 @@ public class MapSampleBaseActivity extends Activity {
         mapView.setTilt(90, 0);
         
         // Set default base map - online vector with persistent caching
-        UnsignedCharVector styleBytes = AssetUtils.loadBytes(Const.VECTOR_STYLE);
+        UnsignedCharVector styleBytes = AssetUtils.loadBytes(vectorStyle);
         if(styleBytes != null){
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
             vectorTileDecoder = new MBVectorTileDecoder(
                     vectorTileStyleSet);
             TileDataSource vectorTileDataSource = new HTTPTileDataSource(
-                    0, 14, Const.NUTITEQ_URL                    
+                    0, 14, tileUrl                    
                     );
 
             // we don't use vectorTileDataSource directly (this would be also option),
@@ -88,10 +90,8 @@ public class MapSampleBaseActivity extends Activity {
             baseLayer = new VectorTileLayer(
                     cachedDataSource, vectorTileDecoder);
             mapView.getLayers().add(baseLayer);
-        }else
-        {
-            Log.e(Const.LOG_TAG, "map style file must be in project assets: "+Const.VECTOR_STYLE);
+        } else {
+            Log.e(Const.LOG_TAG, "map style file must be in project assets: "+vectorStyle);
         }
-        
     }
 }
