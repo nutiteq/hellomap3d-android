@@ -14,7 +14,7 @@ import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.RasterTileLayer;
 import com.nutiteq.layers.TileLoadListener;
 
-public class AnimatedRasterMapActivity extends MapSampleBaseActivity {
+public class AnimatedRasterMapActivity extends VectorMapSampleBaseActivity {
 
     private static final ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();
     private static final int ANIMATION_FRAME_TIME_MS = 300;

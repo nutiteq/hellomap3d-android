@@ -2,8 +2,6 @@ package com.nutiteq.advancedmap3;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -25,9 +23,7 @@ import com.nutiteq.advancedmap3.listener.RouteMapEventListener;
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.UnculledVectorDataSource;
-import com.nutiteq.datasources.VectorDataSource;
 import com.nutiteq.filepicker.FilePickerActivity;
-import com.nutiteq.geometry.LineGeometry;
 import com.nutiteq.layers.VectorLayer;
 import com.nutiteq.styles.BalloonPopupStyleBuilder;
 import com.nutiteq.styles.LineJointType;
@@ -54,7 +50,7 @@ import com.nutiteq.wrappedcommons.MapPosVector;
  * @author jaak
  * 
  */
-public class GraphhopperRouteActivity extends MapSampleBaseActivity implements
+public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implements
         FilePickerActivity {
 
     private GraphHopper gh;

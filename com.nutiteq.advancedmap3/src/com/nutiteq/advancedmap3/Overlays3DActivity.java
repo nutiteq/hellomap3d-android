@@ -3,7 +3,6 @@ package com.nutiteq.advancedmap3;
 import java.io.IOException;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 
 import com.nutiteq.advancedmap3.listener.MyMapEventListener;
@@ -30,7 +29,7 @@ import com.nutiteq.wrappedcommons.MapPosVectorVector;
  * @author jaak
  *
  */
-public class Overlays3DActivity extends MapSampleBaseActivity {
+public class Overlays3DActivity extends VectorMapSampleBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

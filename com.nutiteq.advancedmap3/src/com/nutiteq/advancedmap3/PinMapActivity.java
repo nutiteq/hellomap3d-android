@@ -14,7 +14,7 @@ import com.nutiteq.styles.MarkerStyleBuilder;
 import com.nutiteq.utils.BitmapUtils;
 import com.nutiteq.vectorelements.Marker;
 
-public class PinMapActivity extends MapSampleBaseActivity {
+public class PinMapActivity extends VectorMapSampleBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

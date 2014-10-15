@@ -37,7 +37,7 @@ import com.nutiteq.wrappedcommons.MapPosVectorVector;
  * @author jaak
  *
  */
-public class Overlays2DActivity extends MapSampleBaseActivity {
+public class Overlays2DActivity extends VectorMapSampleBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +210,7 @@ public class Overlays2DActivity extends MapSampleBaseActivity {
                                                balloonPopupStyleBuilder.buildStyle(),
                                                "Popup with pos",
                                                "Images, round");
-        popup1.setMetaDataElement("ClickText", "popupception nr 1");
+        popup1.setMetaDataElement("ClickText", "popupcaption nr 1");
         vectorDataSource1.add(popup1);
         // Add popup, but instead of giving it a position attach it to a marker
         balloonPopupStyleBuilder = new BalloonPopupStyleBuilder();
@@ -224,8 +224,8 @@ public class Overlays2DActivity extends MapSampleBaseActivity {
         balloonPopupStyleBuilder.setStrokeWidth(0);
         balloonPopupStyleBuilder.setPlacementPriority(1);
         BalloonPopup popup2 = new BalloonPopup(marker1, balloonPopupStyleBuilder.buildStyle(),
-                                               "Popup attached to marker", "Black, rectangle. кириллица");
-        popup2.setMetaDataElement("ClickText", "Popupception nr 2");
+                                               "Popup attached to marker", "Black, rectangle.");
+        popup2.setMetaDataElement("ClickText", "Popupcaption nr 2");
         vectorDataSource1.add(popup2);
         // Add popup
         balloonPopupStyleBuilder = new BalloonPopupStyleBuilder();
@@ -235,7 +235,7 @@ public class Overlays2DActivity extends MapSampleBaseActivity {
                                                balloonPopupStyleBuilder.buildStyle(),
                                                "This title will be wrapped if there's not enough space on the screen.",
                                                "Description is set to be truncated with three dots, unless the screen is really really big.");
-        popup3.setMetaDataElement("ClickText", "Popupception nr 3");
+        popup3.setMetaDataElement("ClickText", "Popupcaption nr 3");
         vectorDataSource1.add(popup3);
 
         // finally animate map to Tallinn where the objects are
