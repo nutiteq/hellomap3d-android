@@ -91,7 +91,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         // set route listener
         RouteMapEventListener mapListener = new RouteMapEventListener(this,
                 mapView, routeStartStopDataSource);
-        mapView.getOptions().setMapEventListener(mapListener);
+        mapView.setMapEventListener(mapListener);
 
         // read filename from extras
         Bundle b = getIntent().getExtras();

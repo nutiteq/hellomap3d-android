@@ -56,4 +56,23 @@ public class MapSampleBaseActivity extends Activity {
         mapView.setMapRotation(0, 0);
         mapView.setTilt(90, 0);
     }
+    
+    @Override
+    public void onRestoreInstanceState(Bundle bundle) {
+    	MapPos focusPos = new MapPos(bundle.getDouble("focusX"), bundle.getDouble("focusY"));
+    	mapView.setFocusPos(focusPos, 0);
+    	mapView.setZoom(bundle.getFloat("zoom"), 0);
+    	mapView.setMapRotation(bundle.getFloat("rotation"), 0);
+    	mapView.setTilt(bundle.getFloat("tilt"), 0);
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+    	MapPos focusPos = mapView.getFocusPos();
+    	bundle.putDouble("focusX", focusPos.getX());
+    	bundle.putDouble("focusY", focusPos.getY());
+    	bundle.putFloat("zoom", mapView.getZoom());
+    	bundle.putFloat("rotation", mapView.getMapRotation());
+    	bundle.putFloat("tilt", mapView.getTilt());
+    }
 }

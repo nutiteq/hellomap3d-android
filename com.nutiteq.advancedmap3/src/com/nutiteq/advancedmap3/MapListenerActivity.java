@@ -35,7 +35,6 @@ public class MapListenerActivity extends Overlays2DActivity {
         
         // 2. Create and set a map event listener, 
         // it needs the data source for balloons
-        mapView.getOptions().setMapEventListener(new MyMapEventListener(mapView, vectorDataSource));
-        
+        mapView.setMapEventListener(new MyMapEventListener(mapView, vectorDataSource));
     }
 }

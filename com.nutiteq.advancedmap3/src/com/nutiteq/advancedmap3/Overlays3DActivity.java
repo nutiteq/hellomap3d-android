@@ -95,7 +95,7 @@ public class Overlays3DActivity extends VectorMapSampleBaseActivity {
         }
         
         // 4. add also maplistener to detect click on model
-        mapView.getOptions().setMapEventListener(new MyMapEventListener(mapView, vectorDataSource));
+        mapView.setMapEventListener(new MyMapEventListener(mapView, vectorDataSource));
         
         // finally animate map to the marker
         mapView.setFocusPos(modelPos, 1);
