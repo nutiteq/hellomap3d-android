@@ -3,6 +3,8 @@ package com.nutiteq.advancedmap3;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ZoomControls;
 
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
@@ -55,6 +57,21 @@ public class MapSampleBaseActivity extends Activity {
         mapView.setZoom(2, 0);
         mapView.setMapRotation(0, 0);
         mapView.setTilt(90, 0);
+        
+        // Add listeners to zoom controls
+        ZoomControls zoomControls = (ZoomControls) findViewById(R.id.zoom_controls);
+        zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mapView.zoom(1.0f, 0.3f); // zoom-in exactly one level, duration 0.3 secs
+			}
+		});
+        zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mapView.zoom(-1.0f, 0.3f); // zoom out exactly one level, duration 0.3 secs
+			}
+		});
     }
     
     @Override
