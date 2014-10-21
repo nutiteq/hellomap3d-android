@@ -25,5 +25,4 @@ There is more configuration for map to control and maximize performance. Default
 
 The project includes Nutiteq SDK 3.0 (beta), under commercial evaluation license. For commercial app licenses and customizaton requests please contact sales@nutiteq.com
 
-![screenshot](
-http://share.gifyoutube.com/yan3Ll.webm)
+![screenshot](http://share.gifyoutube.com/yan3Ll.webm)
