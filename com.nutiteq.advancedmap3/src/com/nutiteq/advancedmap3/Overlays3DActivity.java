@@ -9,8 +9,8 @@ import com.nutiteq.advancedmap3.listener.MyMapEventListener;
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.NMLModelLODTreeDataSource;
-import com.nutiteq.datasources.NMLModelLODTreeSqliteDataSource;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.SqliteNMLModelLODTreeDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.graphics.Color;
 import com.nutiteq.hellomap3.util.AssetCopy;
 import com.nutiteq.layers.NMLModelLODTreeLayer;
@@ -36,8 +36,8 @@ public class Overlays3DActivity extends VectorMapSampleBaseActivity {
         // MapSampleBaseActivity creates and configures mapView  
         super.onCreate(savedInstanceState);
         
-        // 1. Initialize an unculled vector data source and layer
-        UnculledVectorDataSource vectorDataSource = new UnculledVectorDataSource(baseProjection);
+        // 1. Initialize a local vector data source and layer
+        LocalVectorDataSource vectorDataSource = new LocalVectorDataSource(baseProjection);
         // Initialize a vector layer with the previous data source
         VectorLayer vectorLayer = new VectorLayer(vectorDataSource);
         // Add the previous vector layer to the map
@@ -85,7 +85,7 @@ public class Overlays3DActivity extends VectorMapSampleBaseActivity {
             AssetCopy.copyAssetToSDCard(getAssets(), fileName, dir);
             Log.i(Const.LOG_TAG,"copy done to " + dir + "/"
                     + fileName);
-            NMLModelLODTreeDataSource nmlDataSource = new NMLModelLODTreeSqliteDataSource(baseProjection, dir + "/" + fileName);
+            NMLModelLODTreeDataSource nmlDataSource = new SqliteNMLModelLODTreeDataSource(baseProjection, dir + "/" + fileName);
             NMLModelLODTreeLayer nmlLayer = new NMLModelLODTreeLayer(nmlDataSource);
             nmlLayer.setVisibleZoomRange(new MapRange(12.0f, 25.0f));
             mapView.getLayers().add(nmlLayer);

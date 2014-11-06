@@ -5,7 +5,7 @@ import android.util.Log;
 import com.nutiteq.advancedmap3.Const;
 import com.nutiteq.advancedmap3.GraphhopperRouteActivity;
 import com.nutiteq.core.MapPos;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.ui.MapClickInfo;
 import com.nutiteq.ui.MapEventListener;
 import com.nutiteq.ui.MapView;
@@ -25,10 +25,10 @@ public class RouteMapEventListener extends MapEventListener {
     private MapPos startPos;
     private MapPos stopPos;
     private MapView mapView;
-    private UnculledVectorDataSource vectorDataSource;
+    private LocalVectorDataSource vectorDataSource;
 
 	// activity is often useful to handle click events
-	public RouteMapEventListener(GraphhopperRouteActivity activity, MapView mapView, UnculledVectorDataSource vectorDataSource) {
+	public RouteMapEventListener(GraphhopperRouteActivity activity, MapView mapView, LocalVectorDataSource vectorDataSource) {
 		this.activity = activity;
 	    this.mapView = mapView;
 	    this.vectorDataSource = vectorDataSource;

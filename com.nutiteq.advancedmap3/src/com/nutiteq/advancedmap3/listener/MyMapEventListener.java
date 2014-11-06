@@ -1,10 +1,12 @@
 package com.nutiteq.advancedmap3.listener;
 
+import java.util.Locale;
+
 import android.util.Log;
 
 import com.nutiteq.advancedmap3.Const;
 import com.nutiteq.core.MapPos;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.styles.BalloonPopupMargins;
 import com.nutiteq.styles.BalloonPopupStyleBuilder;
 import com.nutiteq.ui.ClickType;
@@ -19,11 +21,11 @@ import com.nutiteq.vectorelements.VectorElement;
 
 public class MyMapEventListener extends MapEventListener {
 	private MapView mapView;
-	private UnculledVectorDataSource vectorDataSource;
+	private LocalVectorDataSource vectorDataSource;
 	
 	private BalloonPopup oldClickLabel;
 	
-	public MyMapEventListener(MapView mapView, UnculledVectorDataSource vectorDataSource) {
+	public MyMapEventListener(MapView mapView, LocalVectorDataSource vectorDataSource) {
 		this.mapView = mapView;
 		this.vectorDataSource = vectorDataSource;
 	}
@@ -60,7 +62,7 @@ public class MyMapEventListener extends MapEventListener {
 	
 		MapPos clickPos = mapClickInfo.getClickPos();
 		MapPos wgs84Clickpos = mapView.getOptions().getBaseProjection().toWgs84(clickPos);
-		String msg = String.format("%.4f, %.4f", wgs84Clickpos.getY(), wgs84Clickpos.getX());
+		String msg = String.format(Locale.US, "%.4f, %.4f", wgs84Clickpos.getY(), wgs84Clickpos.getX());
 		BalloonPopup clickPopup = new BalloonPopup(mapClickInfo.getClickPos(),
 												   styleBuilder.buildStyle(),
 		                						   clickMsg,

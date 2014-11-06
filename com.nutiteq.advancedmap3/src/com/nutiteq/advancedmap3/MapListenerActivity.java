@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.nutiteq.advancedmap3.listener.MyMapEventListener;
 import com.nutiteq.core.MapRange;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.layers.VectorLayer;
 
 /**
@@ -23,9 +23,8 @@ public class MapListenerActivity extends Overlays2DActivity {
         // Overlays2DActivity adds 2D vector elements to map  
         super.onCreate(savedInstanceState);
         
-        // 1. Initialize an unculled vector data source and layer for click Balloons
-        
-        UnculledVectorDataSource vectorDataSource = new UnculledVectorDataSource(baseProjection);
+        // 1. Initialize a local vector data source and layer for click Balloons
+        LocalVectorDataSource vectorDataSource = new LocalVectorDataSource(baseProjection);
         // Initialize a vector layer with the previous data source
         VectorLayer vectorLayer = new VectorLayer(vectorDataSource);
         // Add the previous vector layer to the map

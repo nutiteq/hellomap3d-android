@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.nutiteq.advancedmap3.R;
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.layers.VectorLayer;
 import com.nutiteq.styles.MarkerStyle;
 import com.nutiteq.styles.MarkerStyleBuilder;
@@ -22,8 +22,8 @@ public class PinMapActivity extends VectorMapSampleBaseActivity {
         super.onCreate(savedInstanceState);
         
         // Add a pin marker to map
-        // 1. Initialize an unculled vector data source
-        UnculledVectorDataSource vectorDataSource1 = new UnculledVectorDataSource(baseProjection);
+        // 1. Initialize a local vector data source
+        LocalVectorDataSource vectorDataSource1 = new LocalVectorDataSource(baseProjection);
         // Initialize a vector layer with the previous data source
         VectorLayer vectorLayer1 = new VectorLayer(vectorDataSource1);
         // Add the previous vector layer to the map
