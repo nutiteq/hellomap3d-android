@@ -42,7 +42,7 @@ public class PinMapActivity extends VectorMapSampleBaseActivity {
         MarkerStyle sharedMarkerStyle = markerStyleBuilder.buildStyle();
         
         // 3. Add marker
-        MapPos markerPos = baseProjection.fromWgs84(new MapPos(13.38933, 52.51704)); // Berlin
+        MapPos markerPos = mapView.getOptions().getBaseProjection().fromWgs84(new MapPos(13.38933, 52.51704)); // Berlin
         Marker marker1 = new Marker(markerPos, sharedMarkerStyle);
         vectorDataSource1.add(marker1);
         

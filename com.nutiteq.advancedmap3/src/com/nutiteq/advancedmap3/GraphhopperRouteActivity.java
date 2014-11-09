@@ -189,7 +189,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
                 routeDataSource.removeAll();
 
                 routeDataSource.add(createPolyline(startMarker.getGeometry()
-                        .getPos(), stopMarker.getGeometry().getPos(), res));
+                        .getCenterPos(), stopMarker.getGeometry().getCenterPos(), res));
 
                 // add instruction markers
                 InstructionList instructions = res.getInstructions();
