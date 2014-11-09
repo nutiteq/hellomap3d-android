@@ -10,7 +10,7 @@ import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.HTTPTileDataSource;
 import com.nutiteq.datasources.TileDataSource;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.layers.VectorLayer;
 import com.nutiteq.layers.VectorTileLayer;
 import com.nutiteq.projections.EPSG3857;
@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
         
         // 2. Add a pin marker to map
         // Initialize an unculled vector data source
-        UnculledVectorDataSource vectorDataSource1 = new UnculledVectorDataSource(proj);
+        LocalVectorDataSource vectorDataSource1 = new LocalVectorDataSource(proj);
         // Initialize a vector layer with the previous data source
         VectorLayer vectorLayer1 = new VectorLayer(vectorDataSource1);
         // Add the previous vector layer to the map

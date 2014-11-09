@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.graphics.Color;
 import com.nutiteq.layers.VectorLayer;
 import com.nutiteq.projections.Projection;
@@ -46,8 +46,8 @@ public class Overlays2DActivity extends VectorMapSampleBaseActivity {
         
         Projection proj = super.baseProjection;
         
-        // Initialize an unculled vector data source
-        UnculledVectorDataSource vectorDataSource1 = new UnculledVectorDataSource(proj);
+        // Initialize an local vector data source
+        LocalVectorDataSource vectorDataSource1 = new LocalVectorDataSource(proj);
         // Initialize a vector layer with the previous data source
         VectorLayer vectorLayer1 = new VectorLayer(vectorDataSource1);
         // Add the previous vector layer to the map
@@ -61,7 +61,7 @@ public class Overlays2DActivity extends VectorMapSampleBaseActivity {
         // Drawing order withing a layer is currently undefined
         // Using multiple layers is the only way to guarantee
         // that point, line and polygon elements are drawn in a specific order
-        UnculledVectorDataSource vectorDataSource2 = new UnculledVectorDataSource(proj);
+        LocalVectorDataSource vectorDataSource2 = new LocalVectorDataSource(proj);
         VectorLayer vectorLayer2 = new VectorLayer(vectorDataSource2);
         mapView.getLayers().add(vectorLayer2);
         vectorLayer2.setVisibleZoomRange(new MapRange(10, 24));

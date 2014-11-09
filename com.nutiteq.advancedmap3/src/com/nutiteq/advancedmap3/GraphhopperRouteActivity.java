@@ -22,7 +22,7 @@ import com.graphhopper.util.StopWatch;
 import com.nutiteq.advancedmap3.listener.RouteMapEventListener;
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
-import com.nutiteq.datasources.UnculledVectorDataSource;
+import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.filepicker.FilePickerActivity;
 import com.nutiteq.layers.VectorLayer;
 import com.nutiteq.styles.BalloonPopupStyleBuilder;
@@ -62,8 +62,8 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
     private MarkerStyle instructionUp;
     private MarkerStyle instructionLeft;
     private MarkerStyle instructionRight;
-    private UnculledVectorDataSource routeDataSource;
-    private UnculledVectorDataSource routeStartStopDataSource;
+    private LocalVectorDataSource routeDataSource;
+    private LocalVectorDataSource routeStartStopDataSource;
     private BalloonPopupStyleBuilder balloonPopupStyleBuilder;
 
     @Override
@@ -75,7 +75,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-79.3748,43.7155)), 0);
         
         // define layer and datasource for route start and stop markers
-        routeStartStopDataSource = new UnculledVectorDataSource(baseProjection);
+        routeStartStopDataSource = new LocalVectorDataSource(baseProjection);
         // Initialize a vector layer with the previous data source
         VectorLayer vectorLayer = new VectorLayer(routeStartStopDataSource);
         // Add the previous vector layer to the map
@@ -84,7 +84,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         vectorLayer.setVisibleZoomRange(new MapRange(0, 20));
 
         // define layer and datasource for route line and instructions
-        routeDataSource = new UnculledVectorDataSource(baseProjection);
+        routeDataSource = new LocalVectorDataSource(baseProjection);
         VectorLayer routeLayer = new VectorLayer(routeDataSource);
         mapView.getLayers().add(routeLayer);
         
@@ -215,7 +215,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
     }
 
     protected void createRoutePoint(double lon, double lat, String name,
-            long time, double distance, int indicator, UnculledVectorDataSource ds) {
+            long time, double distance, int indicator, LocalVectorDataSource ds) {
 
         MarkerStyle style = instructionUp;
         String str = "";
