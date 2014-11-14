@@ -31,6 +31,7 @@ public class LauncherList extends ListActivity{
             {OfflineVectorMapActivity.class,null},
             {AnimatedRasterMapActivity.class,null},
             {RasterOverlayActivity.class,null},
+            {AerialMapActivity.class,null},
             {CustomRasterDataSourceActivity.class,null},
             {GraphhopperRouteActivity.class,FilePicker.class},
     };
