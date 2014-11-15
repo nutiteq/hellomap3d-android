@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.MBTilesTileDataSource;
+import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.hellomap3.util.AssetCopy;
 import com.nutiteq.layers.VectorTileLayer;
 
@@ -23,6 +24,13 @@ public class OfflineVectorMapActivity extends VectorMapSampleBaseActivity {
         // MapSampleBaseActivity creates and configures mapView  
         super.onCreate(savedInstanceState);
         
+        // Limit zoom range, as we have tiles only up to level 5
+        mapView.getOptions().setZoomRange(new MapRange(0,6));
+        mapView.setZoom(3, 0);
+    }
+    
+    @Override
+    protected TileDataSource createTileDataSource() {
         // offline map data source
         String mbTileFile = "world_ntvt_0_4.mbtiles";
 
@@ -33,17 +41,11 @@ public class OfflineVectorMapActivity extends VectorMapSampleBaseActivity {
                     + mbTileFile);
             MBTilesTileDataSource vectorTileDataSource = new MBTilesTileDataSource(0, 4, localDir + "/"
                     + mbTileFile);
-            mapView.getLayers().remove(baseLayer);
-            baseLayer = new VectorTileLayer(
-                    vectorTileDataSource, vectorTileDecoder);
-            mapView.getLayers().add(baseLayer);
-            
-            mapView.getOptions().setZoomRange(new MapRange(0,6));
-            mapView.setZoom(3, 0);
-            
+            return vectorTileDataSource;            
         } catch (IOException e) {
             Log.e(Const.LOG_TAG, "mbTileFile cannot be copied: "+mbTileFile);
             Log.e(Const.LOG_TAG, e.getLocalizedMessage());
-        }   
-    }    
+        }
+    	return null;
+    }
 }

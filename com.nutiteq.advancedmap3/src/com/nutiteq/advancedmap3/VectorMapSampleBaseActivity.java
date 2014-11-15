@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 
+import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.CompressedCacheTileDataSource;
 import com.nutiteq.datasources.HTTPTileDataSource;
 import com.nutiteq.datasources.PersistentCacheTileDataSource;
@@ -30,93 +31,87 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     
     // Style parameters
     protected String vectorStyleName = "osmbright"; // default style name, each style has corresponding .zip asset
-    protected boolean vectorStyleBuildings3D = false; // OSM Bright style can be optionally used with 3D buildings
     protected String vectorStyleLang = "en"; // default map language
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Update options
+        mapView.getOptions().setZoomRange(new MapRange(0, 20));
+        
         // Set default base map - online vector with persistent caching
         updateBaseLayer();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
     	Menu langMenu = menu.addSubMenu("Language");
-    	langMenu.add ("English").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleLang = "en";
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
-    	langMenu.add ("German").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleLang = "de";
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
-    	langMenu.add ("French").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleLang = "fr";
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
-    	langMenu.add ("Russian").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleLang = "ru";
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
+    	addLanguageMenuOption(langMenu, "English", "en");
+    	addLanguageMenuOption(langMenu, "German",  "de");
+    	addLanguageMenuOption(langMenu, "French",  "fr");
+    	addLanguageMenuOption(langMenu, "Russian", "ru");
    	
     	Menu styleMenu = menu.addSubMenu("Style");
-    	styleMenu.add ("Basic").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleName = "basic";
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
-    	styleMenu.add ("OSM Bright 2D").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleName = "osmbright";
-    	    	vectorStyleBuildings3D = false;
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
-    	styleMenu.add ("OSM Bright 3D").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleName = "osmbright";
-    	    	vectorStyleBuildings3D = true;
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
-    	styleMenu.add ("Loose Leaf").setOnMenuItemClickListener (new OnMenuItemClickListener(){
-    	    @Override
-    	    public boolean onMenuItemClick (MenuItem item){
-    	    	vectorStyleName = "looseleaf";
-    	    	updateBaseLayer();
-    	        return true;
-    	    }
-    	});
-    	
+    	addStyleMenuOption(styleMenu, "Basic", "basic");
+    	addStyleMenuOption(styleMenu, "OSM Bright 2D", "osmbright");
+    	addStyleMenuOption(styleMenu, "OSM Bright 3D", "osmbright3d");
+    	addStyleMenuOption(styleMenu, "Loose Leaf", "looseleaf");
+
     	return true;
     }
     
+    private void addLanguageMenuOption(final Menu menu, String text, final String value) {
+    	MenuItem menuItem = menu.add(text).setOnMenuItemClickListener(new OnMenuItemClickListener(){
+    	    @Override
+    	    public boolean onMenuItemClick (MenuItem item){
+    	    	for (int i = 0; i < menu.size(); i++) {
+    	    		MenuItem otherItem = menu.getItem(i);
+    	    		if (otherItem == item) {
+    	    			otherItem.setIcon(android.R.drawable.checkbox_on_background);
+    	    		} else {
+    	    			otherItem.setIcon(null);
+    	    		}
+    	    	}
+    	    	vectorStyleLang = value;
+    	    	updateBaseLayer();
+    	        return true;
+    	    }
+    	});
+    	if (vectorStyleLang.equals(value)) {
+    		menuItem.setIcon(android.R.drawable.checkbox_on_background);
+    	}
+    }
+    
+    private void addStyleMenuOption(final Menu menu, String text, final String value) {
+    	MenuItem menuItem = menu.add(text).setOnMenuItemClickListener(new OnMenuItemClickListener(){
+    	    @Override
+    	    public boolean onMenuItemClick (MenuItem item){
+    	    	for (int i = 0; i < menu.size(); i++) {
+    	    		MenuItem otherItem = menu.getItem(i);
+    	    		if (otherItem == item) {
+    	    			otherItem.setIcon(android.R.drawable.checkbox_on_background);
+    	    		} else {
+    	    			otherItem.setIcon(null);
+    	    		}
+    	    	}
+    	    	vectorStyleName = value;
+    	    	updateBaseLayer();
+    	        return true;
+    	    }
+    	});
+    	if (vectorStyleName.equals(value)) {
+    		menuItem.setIcon(android.R.drawable.checkbox_on_background);
+    	}    	
+    }
+    
     private void updateBaseLayer() {
-        UnsignedCharVector styleBytes = AssetUtils.loadBytes(vectorStyleName + ".zip");
+    	String styleAssetName = vectorStyleName + ".zip";
+    	boolean styleBuildings3D = false;
+    	if (vectorStyleName.equals("osmbright3d")) {
+    		styleAssetName = "osmbright.zip";
+    		styleBuildings3D = true;
+    	}
+        UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
         if (styleBytes != null){
         	// Create style set
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
@@ -126,33 +121,38 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
             vectorTileDecoder.setStyleParameter("lang", vectorStyleLang);
             
             // OSM Bright style set supports choosing between 2d/3d buildings. Set corresponding parameter.
-            if (vectorStyleName.equals("osmbright")) {
-            	vectorTileDecoder.setStyleParameter("buildings3d", vectorStyleBuildings3D);
+            if (styleAssetName.equals("osmbright.zip")) {
+            	vectorTileDecoder.setStyleParameter("buildings3d", styleBuildings3D);
             }
             
             // Create tile data source for vector tiles
-            TileDataSource vectorTileDataSource = new HTTPTileDataSource(0, 14, tileUrl);
-
-            // We don't use vectorTileDataSource directly (this would be also option),
-            // but via caching to cache data locally persistently/non-persistently
-            // Note that persistent cache requires WRITE_EXTERNAL_STORAGE permission
-            TileDataSource cacheDataSource;
-            if (persistentTileCache) {
-            	String cacheFile = getExternalFilesDir(null)+"/mapcache.db";
-            	Log.i(Const.LOG_TAG,"cacheFile = "+cacheFile);
-            	cacheDataSource = new PersistentCacheTileDataSource(vectorTileDataSource, cacheFile);
-            } else {
-            	cacheDataSource = new CompressedCacheTileDataSource(vectorTileDataSource);
-            }
+            TileDataSource vectorTileDataSource = createTileDataSource();
 
             // Remove old base layer, create new base layer
             if (baseLayer != null) {
             	mapView.getLayers().remove(baseLayer);
             }
-            baseLayer = new VectorTileLayer(cacheDataSource, vectorTileDecoder);
+            baseLayer = new VectorTileLayer(vectorTileDataSource, vectorTileDecoder);
             mapView.getLayers().add(baseLayer);
         } else {
             Log.e(Const.LOG_TAG, "map style file must be in project assets: "+vectorStyleName);        	
         }
+    }
+    
+    protected TileDataSource createTileDataSource() {
+        TileDataSource vectorTileDataSource = new HTTPTileDataSource(0, 14, tileUrl);
+
+        // We don't use vectorTileDataSource directly (this would be also option),
+        // but via caching to cache data locally persistently/non-persistently
+        // Note that persistent cache requires WRITE_EXTERNAL_STORAGE permission
+        TileDataSource cacheDataSource;
+        if (persistentTileCache) {
+        	String cacheFile = getExternalFilesDir(null)+"/mapcache.db";
+        	Log.i(Const.LOG_TAG,"cacheFile = "+cacheFile);
+        	cacheDataSource = new PersistentCacheTileDataSource(vectorTileDataSource, cacheFile);
+        } else {
+        	cacheDataSource = new CompressedCacheTileDataSource(vectorTileDataSource);
+        }
+    	return cacheDataSource;
     }
 }
