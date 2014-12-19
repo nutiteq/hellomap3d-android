@@ -95,18 +95,23 @@ public class MyMapEventListener extends MapEventListener {
 	    styleBuilder.setPlacementPriority(10);
 
 		VectorElement vectorElement = clickInfo.getVectorElement();
+		String clickText = vectorElement.getMetaDataElement("ClickText");
+		if (clickText == null || clickText.length() == 0) {
+			return;
+		}
+
 		if (vectorElement instanceof Billboard) {
 			// If the element is billboard, attach the click label to the billboard element
 			Billboard billboard = (Billboard) vectorElement;
 			clickPopup = new BalloonPopup(billboard, 
 										  styleBuilder.buildStyle(),
-		                    			  billboard.getMetaDataElement("ClickText"), 
+		                    			  clickText, 
 		                    			  "");
 		} else {
 			// for lines and polygons set label to click location
 			clickPopup = new BalloonPopup(clickInfo.getElementClickPos(),
 										  styleBuilder.buildStyle(),
-		                   				  vectorElement.getMetaDataElement("ClickText"),
+		                   				  clickText,
 		                    			  "");
 		}
 		vectorDataSource.add(clickPopup);
