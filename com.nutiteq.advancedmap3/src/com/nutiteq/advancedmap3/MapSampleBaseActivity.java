@@ -30,11 +30,17 @@ public class MapSampleBaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        com.nutiteq.utils.Log.SetShowDebug(true);
+        com.nutiteq.utils.Log.SetShowInfo(true);
+
+        // 0. The initial step: register your license. This must be done before using MapView!
+        // You can get your free/commercial license from: http://developer.nutiteq.com
+        // The license string used here is intended only for Nutiteq demos and WILL NOT WORK with other apps!
+        MapView.RegisterLicense("XTUN3Q0ZBd2NtcmFxbUJtT1h4QnlIZ2F2ZXR0Mi9TY2JBaFJoZDNtTjUvSjJLay9aNUdSVjdnMnJwVXduQnc9PQoKcHJvZHVjdHM9c2RrLWlvcy0zLiosc2RrLWFuZHJvaWQtMy4qCnBhY2thZ2VOYW1lPWNvbS5udXRpdGVxLioKYnVuZGxlSWRlbnRpZmllcj1jb20ubnV0aXRlcS4qCndhdGVybWFyaz1ldmFsdWF0aW9uCnVzZXJLZXk9MTVjZDkxMzEwNzJkNmRmNjhiOGE1NGZlZGE1YjA0OTYK", getApplicationContext());
+
         // 1. Basic map setup
         // Create map view 
         mapView = (MapView) this.findViewById(R.id.map_view);
-        com.nutiteq.utils.Log.SetShowDebug(true);
-        com.nutiteq.utils.Log.SetShowInfo(true);
         
         // Set the base projection, that will be used for most MapView, MapEventListener and Options methods
         baseProjection = new EPSG3857();

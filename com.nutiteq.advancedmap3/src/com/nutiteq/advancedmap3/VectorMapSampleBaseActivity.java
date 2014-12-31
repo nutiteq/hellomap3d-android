@@ -8,7 +8,7 @@ import android.view.MenuItem.OnMenuItemClickListener;
 
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.CompressedCacheTileDataSource;
-import com.nutiteq.datasources.HTTPTileDataSource;
+import com.nutiteq.datasources.NutiteqOnlineTileDataSource;
 import com.nutiteq.datasources.PersistentCacheTileDataSource;
 import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.VectorTileLayer;
@@ -26,7 +26,6 @@ import com.nutiteq.wrappedcommons.UnsignedCharVector;
 public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 
     protected MBVectorTileDecoder vectorTileDecoder;
-    protected String tileUrl = Const.NUTITEQ_VECTOR_URL;
     protected boolean persistentTileCache = false;
     
     // Style parameters
@@ -142,7 +141,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     }
     
     protected TileDataSource createTileDataSource() {
-        TileDataSource vectorTileDataSource = new HTTPTileDataSource(0, 14, tileUrl);
+        TileDataSource vectorTileDataSource = new NutiteqOnlineTileDataSource("nutiteq.mbstreets");
 
         // We don't use vectorTileDataSource directly (this would be also option),
         // but via caching to cache data locally persistently/non-persistently

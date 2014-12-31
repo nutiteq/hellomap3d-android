@@ -25,6 +25,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 0. The initial step: register your license. This must be done before using MapView!
+        // You can get your free/commercial license from: http://developer.nutiteq.com
+        // The license string used here is intended only for Nutiteq demos and WILL NOT WORK with other apps!
+        MapView.RegisterLicense("XTUN3Q0ZBd2NtcmFxbUJtT1h4QnlIZ2F2ZXR0Mi9TY2JBaFJoZDNtTjUvSjJLay9aNUdSVjdnMnJwVXduQnc9PQoKcHJvZHVjdHM9c2RrLWlvcy0zLiosc2RrLWFuZHJvaWQtMy4qCnBhY2thZ2VOYW1lPWNvbS5udXRpdGVxLioKYnVuZGxlSWRlbnRpZmllcj1jb20ubnV0aXRlcS4qCndhdGVybWFyaz1ldmFsdWF0aW9uCnVzZXJLZXk9MTVjZDkxMzEwNzJkNmRmNjhiOGE1NGZlZGE1YjA0OTYK", getApplicationContext());
+
         // 1. Basic map setup
         // Create map view 
         MapView mapView = (MapView) this.findViewById(R.id.map_view);
@@ -43,8 +48,8 @@ public class MainActivity extends Activity {
         mapView.setMapRotation(0, 0);
         mapView.setTilt(90, 0);
         
-        // Create base layer. Use registered Nutiteq API key and vector style from assets (osmbright.zip)
-        VectorTileLayer baseLayer = new NutiteqOnlineVectorTileLayer("15cd9131072d6df68b8a54feda5b0496", "osmbright.zip");
+        // Create base layer. Use vector style from assets (osmbright.zip)
+        VectorTileLayer baseLayer = new NutiteqOnlineVectorTileLayer("osmbright.zip");
         mapView.getLayers().add(baseLayer);
                 
         // 2. Add a pin marker to map
