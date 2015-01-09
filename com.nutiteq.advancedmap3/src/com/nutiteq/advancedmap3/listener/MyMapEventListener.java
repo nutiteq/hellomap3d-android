@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.nutiteq.advancedmap3.Const;
 import com.nutiteq.core.MapPos;
+import com.nutiteq.core.ScreenPos;
 import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.styles.BalloonPopupMargins;
 import com.nutiteq.styles.BalloonPopupStyleBuilder;
@@ -32,6 +33,12 @@ public class MyMapEventListener extends MapEventListener {
 
 	@Override
 	public void onMapMoved() {
+
+        final MapPos topLeft = mapView.screenToMap(new ScreenPos(0, 0));
+        final MapPos bottomRight = mapView.screenToMap(new ScreenPos(mapView.getWidth(), mapView.getHeight()));
+        Log.d(Const.LOG_TAG, mapView.getOptions().getBaseProjection().toWgs84(topLeft)
+                + " " + mapView.getOptions().getBaseProjection().toWgs84(bottomRight));
+
 	}
 
 	@Override
