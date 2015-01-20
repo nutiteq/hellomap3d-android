@@ -38,9 +38,7 @@ import com.nutiteq.vectorelements.Marker;
 import com.nutiteq.wrappedcommons.MapPosVector;
 
 /**
- * 
- * 
- * Uses Graphhopper library to calculate offline routes
+ * A sample displaying how to use Graphhopper library to calculate offline routes
  * 
  * Requires that user has downloaded Graphhopper data package to SDCARD.
  * 
@@ -89,8 +87,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         mapView.getLayers().add(routeLayer);
         
         // set route listener
-        RouteMapEventListener mapListener = new RouteMapEventListener(this,
-                mapView, routeStartStopDataSource);
+        RouteMapEventListener mapListener = new RouteMapEventListener(this, mapView);
         mapView.setMapEventListener(mapListener);
 
         // read filename from extras
@@ -274,8 +271,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         }
         geoPoints.add(end);
 
-        String labelText = "" + (int) (response.getDistance() / 100) / 10f
-                + "km, time:" + response.getMillis() / 60f + "min";
+        //String labelText = "" + (int) (response.getDistance() / 100) / 10f + "km, time:" + response.getMillis() / 60f + "min";
 
         return new Line(geoPoints,
                 lineStyleBuilder.buildStyle());

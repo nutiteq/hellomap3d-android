@@ -7,6 +7,12 @@ import com.nutiteq.datasources.HTTPTileDataSource;
 import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.RasterTileLayer;
 
+/**
+ * A sample showing how to create and use custom raster tile data source.
+ * MyMergedRasterTileDataSource uses two input tile data sources to
+ * create blended tile bitmaps. This can be faster than using two separate raster layers
+ * and takes less memory.
+ */
 public class CustomRasterDataSourceActivity extends MapSampleBaseActivity {
 
 	@Override

@@ -5,14 +5,12 @@ import android.util.Log;
 import com.nutiteq.advancedmap3.Const;
 import com.nutiteq.advancedmap3.GraphhopperRouteActivity;
 import com.nutiteq.core.MapPos;
-import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.ui.MapClickInfo;
 import com.nutiteq.ui.MapEventListener;
 import com.nutiteq.ui.MapView;
 import com.nutiteq.ui.VectorElementsClickInfo;
 
 /**
- * 
  * This MapListener waits for two clicks on map - first to set routing start point, and then
  * second to mark end point and start routing service.
  * 
@@ -25,13 +23,11 @@ public class RouteMapEventListener extends MapEventListener {
     private MapPos startPos;
     private MapPos stopPos;
     private MapView mapView;
-    private LocalVectorDataSource vectorDataSource;
 
 	// activity is often useful to handle click events
-	public RouteMapEventListener(GraphhopperRouteActivity activity, MapView mapView, LocalVectorDataSource vectorDataSource) {
+	public RouteMapEventListener(GraphhopperRouteActivity activity, MapView mapView) {
 		this.activity = activity;
 	    this.mapView = mapView;
-	    this.vectorDataSource = vectorDataSource;
 	}
 
 	@Override

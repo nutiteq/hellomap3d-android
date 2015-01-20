@@ -2,24 +2,18 @@ package com.nutiteq.advancedmap3;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.nutiteq.core.MapRange;
-import com.nutiteq.datasources.HTTPTileDataSource;
 import com.nutiteq.datasources.MBTilesTileDataSource;
-import com.nutiteq.datasources.PersistentCacheTileDataSource;
-import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.filepicker.FilePickerActivity;
-import com.nutiteq.hellomap3.util.AssetCopy;
 import com.nutiteq.layers.VectorTileLayer;
-import com.nutiteq.utils.AssetUtils;
-import com.nutiteq.vectortiles.MBVectorTileDecoder;
-import com.nutiteq.vectortiles.MBVectorTileStyleSet;
-import com.nutiteq.wrappedcommons.UnsignedCharVector;
 
+/**
+ * A sample that uses a specified MBTiles file for the base layer.
+ * The sample assumes that the file name is specified using the Intent "selectedFile" extra field.
+ */
 public class MbtilesActivity extends VectorMapSampleBaseActivity implements
         FilePickerActivity {
 

@@ -19,14 +19,11 @@ import com.nutiteq.wrappedcommons.UnsignedCharVector;
 
 /**
  * Base activity for vector map samples. Adds menu with multiple style choices.
- * 
- * @author jaak
- *
  */
 public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 
     protected MBVectorTileDecoder vectorTileDecoder;
-    protected boolean persistentTileCache = false;
+    protected boolean persistentTileCache = true;
     
     // Style parameters
     protected String vectorStyleName = "osmbright"; // default style name, each style has corresponding .zip asset

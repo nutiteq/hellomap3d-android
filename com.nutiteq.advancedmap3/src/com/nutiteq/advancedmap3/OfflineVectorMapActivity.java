@@ -9,10 +9,11 @@ import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.MBTilesTileDataSource;
 import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.hellomap3.util.AssetCopy;
-import com.nutiteq.layers.VectorTileLayer;
 
 /**
- * Uses sample offline vector map package from assets
+ * A sample that uses bundled asset for offline base map.
+ * As MBTilesDataSource can be used only with files residing in file system,
+ * the assets needs to be copied first to the SDCard.
  * 
  * @author jaak
  *

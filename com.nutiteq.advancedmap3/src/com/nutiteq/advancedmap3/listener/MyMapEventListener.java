@@ -20,6 +20,9 @@ import com.nutiteq.vectorelements.BalloonPopup;
 import com.nutiteq.vectorelements.Billboard;
 import com.nutiteq.vectorelements.VectorElement;
 
+/**
+ * A custom map event listener that displays information about map events and creates pop-ups.
+ */
 public class MyMapEventListener extends MapEventListener {
 	private MapView mapView;
 	private LocalVectorDataSource vectorDataSource;
@@ -76,7 +79,7 @@ public class MyMapEventListener extends MapEventListener {
 		                						   msg);
 		vectorDataSource.add(clickPopup);
 		oldClickLabel = clickPopup;
-}
+	}
 
 	@Override
 	public void onVectorElementClicked(VectorElementsClickInfo vectorElementsClickInfo) {

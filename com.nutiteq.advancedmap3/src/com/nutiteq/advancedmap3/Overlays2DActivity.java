@@ -31,8 +31,8 @@ import com.nutiteq.wrappedcommons.MapPosVector;
 import com.nutiteq.wrappedcommons.MapPosVectorVector;
 
 /**
- * 
- * Add some 2D objects: lines, points, polygon with hole, texts and Popups to map
+ * A sample that displays how to add basic 2D objects to the map:
+ * lines, points, polygon with hole, texts and pop-ups.
  * 
  * @author jaak
  *

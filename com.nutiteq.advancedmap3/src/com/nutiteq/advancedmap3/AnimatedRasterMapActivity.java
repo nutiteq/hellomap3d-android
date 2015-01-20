@@ -14,6 +14,11 @@ import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.RasterTileLayer;
 import com.nutiteq.layers.TileLoadListener;
 
+/**
+ * A sample showing how to add animated raster overlay on top of vector base map.
+ * The sample uses custom tile data source for downloading different tiles for different
+ * animation frames and shows how to use TileLoadListener.
+ */
 public class AnimatedRasterMapActivity extends VectorMapSampleBaseActivity {
 
     private static final ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();

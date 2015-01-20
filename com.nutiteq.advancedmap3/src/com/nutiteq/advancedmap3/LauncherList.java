@@ -11,7 +11,6 @@ import com.nutiteq.filepicker.FilePicker;
 import com.nutiteq.filepicker.FilePickerActivity;
 
 /**
- * 
  * Shows list of demo Activities. Enables to open pre-launch activity for file picking.
  * This is the "main" of samples
  * 

@@ -7,6 +7,9 @@ import com.nutiteq.datasources.HTTPTileDataSource;
 import com.nutiteq.datasources.PersistentCacheTileDataSource;
 import com.nutiteq.layers.RasterTileLayer;
 
+/**
+ * A sample showing how to use raster layer on top of vector base map to provide height information.
+ */
 public class RasterOverlayActivity extends VectorMapSampleBaseActivity {
 
     @Override
@@ -17,7 +20,7 @@ public class RasterOverlayActivity extends VectorMapSampleBaseActivity {
         // Initialize hillshading raster data source, better visible in mountain ranges
         HTTPTileDataSource hillsRasterTileDataSource = new HTTPTileDataSource(0, 24, Const.HILLSHADE_RASTER_URL);
 
-        // add persistent caching into datasource 
+        // Add persistent caching datasource, tiles will be stored locally on persistent storage
         PersistentCacheTileDataSource cachedDataSource = 
                 new PersistentCacheTileDataSource(hillsRasterTileDataSource, getExternalFilesDir(null)+"/mapcache_hills.db");
         

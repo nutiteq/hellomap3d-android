@@ -10,6 +10,10 @@ import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.core.TileData;
 import com.nutiteq.utils.BitmapUtils;
 
+/**
+ * A custom raster tile data source that loads tiles from two sources and then blends
+ * them into a single tile.
+ */
 public class MyMergedRasterTileDataSource extends TileDataSource {
 	private TileDataSource dataSource1;
     private TileDataSource dataSource2;

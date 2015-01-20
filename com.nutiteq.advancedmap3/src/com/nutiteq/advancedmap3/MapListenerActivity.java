@@ -8,9 +8,9 @@ import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.layers.VectorLayer;
 
 /**
- * 
- * Add MapListener for click detections on map and map vector objects
- * Vector objects are added in Overlays2DActivity
+ * A sample displaying how to set custom MapListener
+ * to detect clicks on map and on map vector elements.
+ * Actual vector elements are added in Overlays2DActivity, as this class extends it.
  * 
  * @author jaak
  *
