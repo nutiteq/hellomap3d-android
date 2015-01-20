@@ -13,9 +13,6 @@ import com.nutiteq.filepicker.FilePickerActivity;
 /**
  * Shows list of demo Activities. Enables to open pre-launch activity for file picking.
  * This is the "main" of samples
- * 
- * @author jaak
- *
  */
 public class LauncherList extends ListActivity{
 
@@ -33,6 +30,7 @@ public class LauncherList extends ListActivity{
             {RasterOverlayActivity.class,null},
             {AerialMapActivity.class,null},
             {CustomRasterDataSourceActivity.class,null},
+            {CustomPopupActivity.class,null},
             {GraphhopperRouteActivity.class,FilePicker.class},
     };
 
