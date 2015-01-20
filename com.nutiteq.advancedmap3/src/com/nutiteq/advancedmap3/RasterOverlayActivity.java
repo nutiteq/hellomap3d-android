@@ -8,7 +8,8 @@ import com.nutiteq.datasources.PersistentCacheTileDataSource;
 import com.nutiteq.layers.RasterTileLayer;
 
 /**
- * A sample showing how to use raster layer on top of vector base map to provide height information.
+ * A sample demonstrating how to use raster layer on top of
+ * the vector base map to provide height information.
  */
 public class RasterOverlayActivity extends VectorMapSampleBaseActivity {
 

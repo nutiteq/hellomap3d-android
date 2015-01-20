@@ -13,9 +13,6 @@ import com.nutiteq.ui.VectorElementsClickInfo;
 /**
  * This MapListener waits for two clicks on map - first to set routing start point, and then
  * second to mark end point and start routing service.
- * 
- * @author jaak
- *
  */
 public class RouteMapEventListener extends MapEventListener {
 

@@ -15,7 +15,7 @@ import com.nutiteq.utils.BitmapUtils;
 import com.nutiteq.vectorelements.Marker;
 
 /**
- * A sample displaying how to use markers on the map. This involves creating
+ * A sample demonstrating how to use markers on the map. This involves creating
  * a data source for the markers, creating a layer using the data source, loading
  * marker bitmaps, creating style for the marker and finally adding the marker to the data source.
  * For multiple markers, the same data source, layer and style should be reused if possible.

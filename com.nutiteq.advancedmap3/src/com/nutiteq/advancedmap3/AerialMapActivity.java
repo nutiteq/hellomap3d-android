@@ -7,7 +7,7 @@ import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.RasterTileLayer;
 
 /**
- * A sample showing how to use raster layers with external tile data sources.
+ * A sample demonstrating how to use raster layers with external tile data sources.
  */
 public class AerialMapActivity extends MapSampleBaseActivity {
 

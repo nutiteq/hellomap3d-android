@@ -15,9 +15,6 @@ import com.nutiteq.ui.MapView;
 
 /**
  * Base activity for map samples. Includes simple lifecycle management
- * 
- * @author jaak
- *
  */
 public class MapSampleBaseActivity extends Activity {
 

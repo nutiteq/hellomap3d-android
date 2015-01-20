@@ -14,9 +14,6 @@ import com.nutiteq.hellomap3.util.AssetCopy;
  * A sample that uses bundled asset for offline base map.
  * As MBTilesDataSource can be used only with files residing in file system,
  * the assets needs to be copied first to the SDCard.
- * 
- * @author jaak
- *
  */
 public class OfflineVectorMapActivity extends VectorMapSampleBaseActivity {
 

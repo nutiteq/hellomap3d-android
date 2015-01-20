@@ -38,15 +38,12 @@ import com.nutiteq.vectorelements.Marker;
 import com.nutiteq.wrappedcommons.MapPosVector;
 
 /**
- * A sample displaying how to use Graphhopper library to calculate offline routes
+ * A sample demonstrating how to use Graphhopper library to calculate offline routes
  * 
  * Requires that user has downloaded Graphhopper data package to SDCARD.
  * 
  * See https://github.com/nutiteq/hellomap3d/wiki/Offline-routing for details
  * and downloads
- * 
- * @author jaak
- * 
  */
 public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implements
         FilePickerActivity {

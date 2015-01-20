@@ -31,11 +31,8 @@ import com.nutiteq.wrappedcommons.MapPosVector;
 import com.nutiteq.wrappedcommons.MapPosVectorVector;
 
 /**
- * A sample that displays how to add basic 2D objects to the map:
+ * A sample demonstrating how to add basic 2D objects to the map:
  * lines, points, polygon with hole, texts and pop-ups.
- * 
- * @author jaak
- *
  */
 public class Overlays2DActivity extends VectorMapSampleBaseActivity {
 

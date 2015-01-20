@@ -23,11 +23,8 @@ import com.nutiteq.wrappedcommons.MapPosVector;
 import com.nutiteq.wrappedcommons.MapPosVectorVector;
 
 /**
- * 
- * Add some 3D elements: 3D polygon, 3D model (NML) and 3D city (NMLDB) to map
- * 
- * @author jaak
- *
+ * A sample demonstrating how to use 3D vector elements:
+ * 3D polygon, 3D model (NML) and 3D city (NMLDB)
  */
 public class Overlays3DActivity extends VectorMapSampleBaseActivity {
 
