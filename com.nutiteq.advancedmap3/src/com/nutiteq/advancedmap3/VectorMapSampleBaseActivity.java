@@ -44,6 +44,8 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     	Menu langMenu = menu.addSubMenu("Language");
     	addLanguageMenuOption(langMenu, "English", "en");
     	addLanguageMenuOption(langMenu, "German",  "de");
+        addLanguageMenuOption(langMenu, "Spanish",  "es");
+        addLanguageMenuOption(langMenu, "Italian",  "it");
     	addLanguageMenuOption(langMenu, "French",  "fr");
     	addLanguageMenuOption(langMenu, "Russian", "ru");
     	addLanguageMenuOption(langMenu, "Chinese", "zh");
@@ -52,7 +54,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     	addStyleMenuOption(styleMenu, "Basic", "basic");
     	addStyleMenuOption(styleMenu, "OSM Bright 2D", "osmbright");
     	addStyleMenuOption(styleMenu, "OSM Bright 3D", "osmbright3d");
-    	addStyleMenuOption(styleMenu, "OSM Bright Chinese", "osmbright-unifont");
+    	addStyleMenuOption(styleMenu, "OSM Bright Chinese", "osmbright-heilight");
     	addStyleMenuOption(styleMenu, "Loose Leaf", "looseleaf");
 
     	return true;
