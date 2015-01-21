@@ -109,7 +109,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     		styleAssetName = "osmbright.zip";
     		styleBuildings3D = true;
     	}
-        UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
+        UnsignedCharVector styleBytes = AssetUtils.LoadBytes(styleAssetName);
         if (styleBytes != null){
         	// Create style set
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
@@ -131,7 +131,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
             	mapView.getLayers().remove(baseLayer);
             }
             baseLayer = new VectorTileLayer(vectorTileDataSource, vectorTileDecoder);
-            mapView.getLayers().add(baseLayer);
+            mapView.getLayers().insert(0, baseLayer);
         } else {
             Log.e(Const.LOG_TAG, "map style file must be in project assets: "+vectorStyleName);        	
         }
