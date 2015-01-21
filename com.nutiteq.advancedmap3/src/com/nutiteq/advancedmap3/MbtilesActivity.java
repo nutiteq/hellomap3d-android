@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.MBTilesTileDataSource;
 import com.nutiteq.filepicker.FilePickerActivity;
+import com.nutiteq.layers.RasterTileLayer;
 import com.nutiteq.layers.VectorTileLayer;
 
 /**
@@ -30,12 +31,12 @@ public class MbtilesActivity extends VectorMapSampleBaseActivity implements
         
         // replace baseLayer with new datasource
         
-        MBTilesTileDataSource vectorTileDataSource = new MBTilesTileDataSource(
+        MBTilesTileDataSource tileDataSource = new MBTilesTileDataSource(
                 0, 14, filePath);
         mapView.getLayers().remove(baseLayer);
         
-        baseLayer = new VectorTileLayer(vectorTileDataSource,
-                vectorTileDecoder);
+        baseLayer = new RasterTileLayer(tileDataSource
+                );
         mapView.getLayers().add(baseLayer);
 
         mapView.getOptions().setZoomRange(new MapRange(0, 18));
@@ -45,7 +46,7 @@ public class MbtilesActivity extends VectorMapSampleBaseActivity implements
 
     @Override
     public String getFileSelectMessage() {
-        return "Select MBTiles file (vector tiles or raster)";
+        return "Select MBTiles file (raster)";
     }
 
     @Override

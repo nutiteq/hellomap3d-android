@@ -30,7 +30,7 @@ public class RasterOverlayActivity extends VectorMapSampleBaseActivity {
         // Add the previous raster layer to the map
         mapView.getLayers().add(hillshadeLayer);
 
-        // finally animate map to the marker
+        // finally animate map to a nice place
         mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-122.4323, 37.7582)), 1);
         mapView.setZoom(13, 1);
     }
