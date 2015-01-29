@@ -32,6 +32,7 @@ public class LauncherList extends ListActivity{
             {CustomRasterDataSourceActivity.class,null},
             {CustomPopupActivity.class,null},
             {GraphhopperRouteActivity.class,FilePicker.class},
+            {WmsMapActivity.class,null},
     };
 
     @Override
