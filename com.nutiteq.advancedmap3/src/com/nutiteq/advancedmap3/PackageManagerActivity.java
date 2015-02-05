@@ -1,7 +1,6 @@
 package com.nutiteq.advancedmap3;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,7 +20,6 @@ import android.widget.Toast;
 
 import com.nutiteq.advancedmap3.Const;
 import com.nutiteq.advancedmap3.R;
-import com.nutiteq.hellomap3.util.AssetCopy;
 import com.nutiteq.packagemanager.NutiteqPackageManager;
 import com.nutiteq.packagemanager.PackageInfo;
 import com.nutiteq.packagemanager.PackageManagerListener;
@@ -34,13 +32,10 @@ import com.nutiteq.wrappedcommons.StringVector;
 /**
  * A sample demonstrating how to use offline package manager of the Nutiteq SDK.
  * 
- * On the first run a custom MBTiles package is imported (we call this 'base package'), this package
- * contains tiles up to zoom level 5 and is small enough to be embedded with the application.
- * 
- * Then the sample downloads the latest package list from Nutiteq online service,
+ * The sample downloads the latest package list from Nutiteq online service,
  * displays this list and allows user to manage offline packages (download, update, delete them).
  * 
- * Note that the sample does not include actual MapView, but using download packages
+ * Note that the sample does not include MapView, but using download packages
  * is actually very similar to using other tile sources - SDK contains PackageManagerTileDataSource
  * that will automatically display all imported or downloaded packages. PackageManagerTileDataSource
  * needs PackageManager instance, so it is best to create a PackageManager instance at application level
@@ -232,10 +227,6 @@ public class PackageManagerActivity extends ListActivity {
 		}
 	}
 
-	// We will import initial map package that contains tiles up to zoom level 5.
-	// We need to define a unique id for this package that does not clash with predefined packages.
-	private static final String BASE_PACKAGE_ID = "basepkg";
-
 	private NutiteqPackageManager packageManager;
 	private ArrayAdapter<Package> packageAdapter;
 	private ArrayList<Package> packageArray = new ArrayList<Package>();
@@ -269,27 +260,6 @@ public class PackageManagerActivity extends ListActivity {
 	public void onStart() {
 		super.onStart();
 		packageManager.start();
-
-		// Check if initial package is imported
-		boolean imported = false;
-		PackageInfoVector packages = packageManager.getLocalPackages();
-		for (int i = 0; i < packages.size(); i++) {
-			if (packages.get(i).getPackageId().equals(BASE_PACKAGE_ID)) {
-				imported = true;
-				break;
-			}
-		}
-		if (!imported) {
-			Log.i(Const.LOG_TAG, "Importing initial package");
-            File localDir = getExternalFilesDir(null);
-            try {
-				AssetCopy.copyAssetToSDCard(getAssets(), "basepkg.mbtiles", localDir.getAbsolutePath());
-				packageManager.startPackageImport(BASE_PACKAGE_ID, 1, new File(localDir, "basepkg.mbtiles").getAbsolutePath());
-			} catch (IOException e) {
-				Toast.makeText(getApplication(), "Could not import initial map package", Toast.LENGTH_SHORT).show();
-			}
-			// TODO: basepkg.mbtiles can be removed once import is complete (listener)
-		}
 	}
 	
 	@Override
@@ -313,10 +283,6 @@ public class PackageManagerActivity extends ListActivity {
 		PackageInfoVector packageInfoVector = packageManager.getServerPackages();
 		for (int i = 0; i < packageInfoVector.size(); i++) {
 			PackageInfo packageInfo = packageInfoVector.get(i);
-			String packageId = packageInfo.getPackageId();
-			if (packageId.equals(BASE_PACKAGE_ID)) {
-				continue; // ignore base package
-			}
 
 			// Get the list of names for this package. Each package may have multiple names,
 			// packages are grouped using '/' as a separator, so the the full name for Sweden
@@ -371,23 +337,15 @@ public class PackageManagerActivity extends ListActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				// Try to find the view that refers to the given package. Update only this view.
-				int start = getListView().getFirstVisiblePosition();
-				int end = getListView().getLastVisiblePosition();
-				for (int position = start; position <= end; position++) {
-					Package pkg = null;
-					try {
-						pkg = (Package) getListView().getItemAtPosition(position);
-					} catch(Exception e) {						
-					}
-					if (pkg != null) {
-						if (packageId.equals(pkg.packageId)) {
-							PackageStatus packageStatus = packageManager.getLocalPackageStatus(packageId, -1);
-							pkg = new Package(pkg.packageName, pkg.packageInfo, packageStatus);
-							packageArray.set(position, pkg);
-							packageAdapter.getView(position, getListView().getChildAt(position - start), getListView());
-							break;
-						}
+				// Try to find the package that needs to be updated
+				for (int i = 0; i < packageArray.size(); i++) {
+					Package pkg = packageArray.get(i);
+					if (packageId.equals(pkg.packageId)) {
+						PackageStatus packageStatus = packageManager.getLocalPackageStatus(packageId, -1);
+						pkg = new Package(pkg.packageName, pkg.packageInfo, packageStatus);
+						packageArray.set(i, pkg);
+						// TODO: it would be much better to only refresh the changed row
+						packageAdapter.notifyDataSetChanged();
 					}
 				}
 			}
