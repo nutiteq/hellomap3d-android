@@ -4,12 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -18,8 +24,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nutiteq.advancedmap3.Const;
-import com.nutiteq.advancedmap3.R;
+import com.nutiteq.datasources.PackageManagerTileDataSource;
 import com.nutiteq.packagemanager.NutiteqPackageManager;
 import com.nutiteq.packagemanager.PackageInfo;
 import com.nutiteq.packagemanager.PackageManagerListener;
@@ -233,6 +238,7 @@ public class PackageManagerActivity extends ListActivity {
 	
 	private String currentFolder = ""; // Current 'folder' of the package, for example "Asia/"
 	private String language = "en"; // Language for the package names. Most major languages are supported
+    public static PackageManagerTileDataSource dataSource;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -359,5 +365,31 @@ public class PackageManagerActivity extends ListActivity {
 				Toast.makeText(getApplication(), msg, Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+	
+	@SuppressLint("InlinedApi")
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    
+	    MenuItem menuItem = menu.add("Map").setOnMenuItemClickListener(new OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick (MenuItem item){
+               
+                // Using static global variable to pass data. Avoid this in your app (memory leaks etc)!
+                PackageManagerActivity.dataSource = new PackageManagerTileDataSource(PackageManagerActivity.this.packageManager);
+                
+                Intent myIntent = new Intent(PackageManagerActivity.this,
+                        PackagedMapActivity.class);
+                PackageManagerActivity.this.startActivity(myIntent);
+                
+                return true;
+            }
+        });
+	    
+	    menuItem.setIcon(android.R.drawable.ic_dialog_map);
+	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+	            menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+	    }
+	    return super.onCreateOptionsMenu(menu);
 	}
 }

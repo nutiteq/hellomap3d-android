@@ -27,6 +27,7 @@
         </activity>
         <activity android:name="com.nutiteq.advancedmap3.PinMapActivity" />
         <activity android:name="com.nutiteq.advancedmap3.PackageManagerActivity" />
+        <activity android:name="com.nutiteq.advancedmap3.PackagedMapActivity" />
         <activity android:name="com.nutiteq.advancedmap3.Overlays2DActivity" />
         <activity android:name="com.nutiteq.advancedmap3.MapListenerActivity" />
         <activity android:name="com.nutiteq.advancedmap3.Overlays3DActivity" />
