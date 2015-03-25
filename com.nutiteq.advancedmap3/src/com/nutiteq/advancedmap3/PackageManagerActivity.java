@@ -26,10 +26,11 @@ import android.widget.Toast;
 
 import com.nutiteq.datasources.PackageManagerTileDataSource;
 import com.nutiteq.packagemanager.NutiteqPackageManager;
+import com.nutiteq.packagemanager.PackageErrorType;
 import com.nutiteq.packagemanager.PackageInfo;
 import com.nutiteq.packagemanager.PackageManagerListener;
 import com.nutiteq.packagemanager.PackageStatus;
-import com.nutiteq.packagemanager.PackageStatus.Action;
+import com.nutiteq.packagemanager.PackageAction;
 import com.nutiteq.ui.MapView;
 import com.nutiteq.wrappedcommons.PackageInfoVector;
 import com.nutiteq.wrappedcommons.StringVector;
@@ -123,7 +124,7 @@ public class PackageManagerActivity extends ListActivity {
 
 				// Check if the package is downloaded/is being downloaded (so that status is not null)
 				if (pkg.packageStatus != null) {
-					if (pkg.packageStatus.getAction() == Action.READY) {
+					if (pkg.packageStatus.getCurrentAction() == PackageAction.PACKAGE_ACTION_READY) {
 						status = "ready";
 						holder.actionButton.setText("RM");
 						holder.actionButton.setOnClickListener(new OnClickListener() {
@@ -132,7 +133,7 @@ public class PackageManagerActivity extends ListActivity {
 								packageManager.startPackageRemove(pkg.packageInfo.getPackageId());
 							}
 						});
-					} else if (pkg.packageStatus.getAction() == Action.WAITING) {
+					} else if (pkg.packageStatus.getCurrentAction() == PackageAction.PACKAGE_ACTION_WAITING) {
 						status = "queued";
 						holder.actionButton.setText("C");
 						holder.actionButton.setOnClickListener(new OnClickListener() {
@@ -142,11 +143,11 @@ public class PackageManagerActivity extends ListActivity {
 							}
 						});
 					} else {
-						if (pkg.packageStatus.getAction() == Action.COPYING) {
+						if (pkg.packageStatus.getCurrentAction() == PackageAction.PACKAGE_ACTION_COPYING) {
 							status = "copying";
-						} else if (pkg.packageStatus.getAction() == Action.DOWNLOADING) {
+						} else if (pkg.packageStatus.getCurrentAction() == PackageAction.PACKAGE_ACTION_DOWNLOADING) {
 							status = "downloading";
-						} else if (pkg.packageStatus.getAction() == Action.REMOVING) {
+						} else if (pkg.packageStatus.getCurrentAction() == PackageAction.PACKAGE_ACTION_REMOVING) {
 							status = "removing";
 						}
 						status += " " + Integer.toString((int) pkg.packageStatus.getProgress()) + "%";
@@ -226,9 +227,9 @@ public class PackageManagerActivity extends ListActivity {
 		}
 
 		@Override
-		public void onPackageFailed(String id, int version) {
+		public void onPackageFailed(String id, int version, PackageErrorType errorType) {
 			updatePackage(id);
-			displayToast("Failed to download package " + id + "/" + version);
+			displayToast("Failed to download package " + id + "/" + version + ": " + errorType);
 		}
 	}
 
@@ -245,14 +246,14 @@ public class PackageManagerActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 		// Register license
-        MapView.RegisterLicense("XTUN3Q0ZBd2NtcmFxbUJtT1h4QnlIZ2F2ZXR0Mi9TY2JBaFJoZDNtTjUvSjJLay9aNUdSVjdnMnJwVXduQnc9PQoKcHJvZHVjdHM9c2RrLWlvcy0zLiosc2RrLWFuZHJvaWQtMy4qCnBhY2thZ2VOYW1lPWNvbS5udXRpdGVxLioKYnVuZGxlSWRlbnRpZmllcj1jb20ubnV0aXRlcS4qCndhdGVybWFyaz1ldmFsdWF0aW9uCnVzZXJLZXk9MTVjZDkxMzEwNzJkNmRmNjhiOGE1NGZlZGE1YjA0OTYK", getApplicationContext());
+        MapView.registerLicense("XTUN3Q0ZBd2NtcmFxbUJtT1h4QnlIZ2F2ZXR0Mi9TY2JBaFJoZDNtTjUvSjJLay9aNUdSVjdnMnJwVXduQnc9PQoKcHJvZHVjdHM9c2RrLWlvcy0zLiosc2RrLWFuZHJvaWQtMy4qCnBhY2thZ2VOYW1lPWNvbS5udXRpdGVxLioKYnVuZGxlSWRlbnRpZmllcj1jb20ubnV0aXRlcS4qCndhdGVybWFyaz1ldmFsdWF0aW9uCnVzZXJLZXk9MTVjZDkxMzEwNzJkNmRmNjhiOGE1NGZlZGE1YjA0OTYK", getApplicationContext());
 		
         // Create package manager
         File packageFolder = new File(getApplicationContext().getExternalFilesDir(null), "mappackages");
         if (!(packageFolder.mkdirs() || packageFolder.isDirectory())) {
         	Log.e(Const.LOG_TAG, "Could not create package folder!");
         }
-        packageManager = new NutiteqPackageManager(getApplicationContext(), "nutiteq.mbstreets", packageFolder.getAbsolutePath());
+        packageManager = new NutiteqPackageManager("nutiteq.mbstreets", packageFolder.getAbsolutePath());
         packageManager.setPackageManagerListener(new PackageListener());
     	packageManager.startPackageListDownload();
 
@@ -367,7 +368,7 @@ public class PackageManagerActivity extends ListActivity {
 		});
 	}
 	
-	@SuppressLint("InlinedApi")
+	@SuppressLint({ "InlinedApi", "NewApi" })
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    

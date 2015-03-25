@@ -159,6 +159,6 @@ public class CustomPopup extends Popup {
 	    	canvas.restore();
 	    }
 	    
-		return BitmapUtils.CreateBitmapFromAndroidBitmap(bitmap);
+		return BitmapUtils.createBitmapFromAndroidBitmap(bitmap);
 	}
 }

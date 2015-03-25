@@ -174,7 +174,7 @@ public class Overlays2DActivity extends VectorMapSampleBaseActivity {
         
         // Load bitmaps for custom markers
         Bitmap androidMarkerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker);
-        com.nutiteq.graphics.Bitmap markerBitmap = BitmapUtils.CreateBitmapFromAndroidBitmap(androidMarkerBitmap);
+        com.nutiteq.graphics.Bitmap markerBitmap = BitmapUtils.createBitmapFromAndroidBitmap(androidMarkerBitmap);
         
         // Create marker style
         MarkerStyleBuilder markerStyleBuilder = new MarkerStyleBuilder();
@@ -199,8 +199,8 @@ public class Overlays2DActivity extends VectorMapSampleBaseActivity {
         BalloonPopupStyleBuilder balloonPopupStyleBuilder = new BalloonPopupStyleBuilder();
         balloonPopupStyleBuilder.setCornerRadius(20);
         balloonPopupStyleBuilder.setLeftMargins(new BalloonPopupMargins(6, 6, 6, 6));
-        balloonPopupStyleBuilder.setLeftImage(infoImage);
-        balloonPopupStyleBuilder.setRightImage(arrowImage);
+        balloonPopupStyleBuilder.setLeftImage(BitmapUtils.createBitmapFromAndroidBitmap(infoImage));
+        balloonPopupStyleBuilder.setRightImage(BitmapUtils.createBitmapFromAndroidBitmap(arrowImage));
         balloonPopupStyleBuilder.setRightMargins(new BalloonPopupMargins(2, 6, 12, 6));
         balloonPopupStyleBuilder.setPlacementPriority(1);
         BalloonPopup popup1 = new BalloonPopup(proj.fromWgs84(new MapPos(24.655662, 59.425521)),

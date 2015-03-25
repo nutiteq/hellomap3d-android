@@ -39,7 +39,7 @@ public class PinMapActivity extends VectorMapSampleBaseActivity {
         
         // 2. Create marker style
         Bitmap androidMarkerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker);
-        com.nutiteq.graphics.Bitmap markerBitmap = BitmapUtils.CreateBitmapFromAndroidBitmap(androidMarkerBitmap);
+        com.nutiteq.graphics.Bitmap markerBitmap = BitmapUtils.createBitmapFromAndroidBitmap(androidMarkerBitmap);
         
         MarkerStyleBuilder markerStyleBuilder = new MarkerStyleBuilder();
         markerStyleBuilder.setBitmap(markerBitmap);

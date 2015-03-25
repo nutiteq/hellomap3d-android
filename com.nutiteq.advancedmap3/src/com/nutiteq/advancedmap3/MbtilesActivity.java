@@ -36,7 +36,7 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
         // Now check if we need to use vector layer or raster layer, based on mbtiles metadata
         String format = tileDataSource.getMetaData().get("format");
         if ("mbvt".equals(format)) {
-            UnsignedCharVector styleBytes = AssetUtils.LoadBytes("osmbright.zip");
+            UnsignedCharVector styleBytes = AssetUtils.loadBytes("osmbright.zip");
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
             VectorTileDecoder vectorTileDecoder = new MBVectorTileDecoder(vectorTileStyleSet);
         	baseLayer = new VectorTileLayer(tileDataSource, vectorTileDecoder);

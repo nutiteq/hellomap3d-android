@@ -45,7 +45,7 @@ public class Overlays3DActivity extends VectorMapSampleBaseActivity {
         
         //2. Add a single 3D model to the vector layer
         MapPos modelPos = baseProjection.fromWgs84(new MapPos(24.646469, 59.423939));
-        NMLModel model = new NMLModel(modelPos, AssetUtils.LoadBytes("milktruck.nml"));
+        NMLModel model = new NMLModel(modelPos, AssetUtils.loadBytes("milktruck.nml"));
         model.setScale(20);
         model.setMetaDataElement("ClickText", "Single model");
         vectorDataSource.add(model);

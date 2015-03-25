@@ -111,7 +111,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     		styleAssetName = "osmbright.zip";
     		styleBuildings3D = true;
     	}
-        UnsignedCharVector styleBytes = AssetUtils.LoadBytes(styleAssetName);
+        UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
         if (styleBytes != null){
         	// Create style set
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
@@ -145,7 +145,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
         // We don't use vectorTileDataSource directly (this would be also option),
         // but via caching to cache data locally persistently/non-persistently
         // Note that persistent cache requires WRITE_EXTERNAL_STORAGE permission
-        TileDataSource cacheDataSource;
+        TileDataSource cacheDataSource = vectorTileDataSource;
         if (persistentTileCache) {
         	String cacheFile = getExternalFilesDir(null)+"/mapcache.db";
         	Log.i(Const.LOG_TAG,"cacheFile = "+cacheFile);

@@ -99,7 +99,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
 
         MarkerStyleBuilder markerStyleBuilder = new MarkerStyleBuilder();
         markerStyleBuilder.setBitmap(BitmapUtils
-                .CreateBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
+                .createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
                         getResources(), R.drawable.olmarker)));
         markerStyleBuilder.setHideIfOverlapped(false);
         markerStyleBuilder.setSize(30);
@@ -119,17 +119,17 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
 
         markerStyleBuilder.setColor(new com.nutiteq.graphics.Color(Color.WHITE));
         markerStyleBuilder.setBitmap(BitmapUtils
-                .CreateBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
+                .createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
                         getResources(), R.drawable.direction_up)));
         instructionUp = markerStyleBuilder.buildStyle();
 
         markerStyleBuilder.setBitmap(BitmapUtils
-                .CreateBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
+                .createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
                         getResources(), R.drawable.direction_upthenleft)));
         instructionLeft = markerStyleBuilder.buildStyle();
 
         markerStyleBuilder.setBitmap(BitmapUtils
-                .CreateBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
+                .createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(
                         getResources(), R.drawable.direction_upthenright)));
 
         instructionRight = markerStyleBuilder.buildStyle();
