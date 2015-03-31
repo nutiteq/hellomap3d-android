@@ -4,6 +4,7 @@ com.nutiteq.datasources
 com.nutiteq.geometry
 com.nutiteq.graphics
 com.nutiteq.layers
+com.nutiteq.packagemanager
 com.nutiteq.projections
 com.nutiteq.renderers.components
 com.nutiteq.styles
