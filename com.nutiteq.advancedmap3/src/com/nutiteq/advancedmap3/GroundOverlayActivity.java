@@ -49,9 +49,9 @@ public class GroundOverlayActivity extends VectorMapSampleBaseActivity {
 
         ScreenPosVector bitmapPoses = new ScreenPosVector();
         bitmapPoses.add(new ScreenPos(0, 0));
-        bitmapPoses.add(new ScreenPos(0, overlayBitmap.getHeight()));
-        bitmapPoses.add(new ScreenPos(overlayBitmap.getWidth(), overlayBitmap.getHeight()));
-        bitmapPoses.add(new ScreenPos(overlayBitmap.getWidth(), 0));
+        bitmapPoses.add(new ScreenPos(0, overlayBitmap.getOrigHeight()));
+        bitmapPoses.add(new ScreenPos(overlayBitmap.getOrigWidth(), overlayBitmap.getOrigHeight()));
+        bitmapPoses.add(new ScreenPos(overlayBitmap.getOrigWidth(), 0));
         
         // Create bitmap overlay raster tile data source
         BitmapOverlayRasterTileDataSource rasterDataSource = new BitmapOverlayRasterTileDataSource(0, 20, overlayBitmap, proj, mapPoses, bitmapPoses);
