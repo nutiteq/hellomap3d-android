@@ -26,6 +26,7 @@ public class LauncherList extends ListActivity{
             {Overlays3DActivity.class,null},
             {OfflineVectorMapActivity.class,null},
             {MbtilesActivity.class,FilePicker.class},
+            {GroundOverlayActivity.class,null},
             {AnimatedRasterMapActivity.class,null},
             {RasterOverlayActivity.class,null},
             {AerialMapActivity.class,null},
