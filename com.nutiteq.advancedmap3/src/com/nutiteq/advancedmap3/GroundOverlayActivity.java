@@ -37,7 +37,8 @@ public class GroundOverlayActivity extends VectorMapSampleBaseActivity {
         //com.nutiteq.graphics.Bitmap overlayBitmap = BitmapUtils.createBitmapFromAndroidBitmap(androidMarkerBitmap);
         com.nutiteq.graphics.Bitmap overlayBitmap = new com.nutiteq.graphics.Bitmap(AssetUtils.loadBytes("jefferson-building-ground-floor.jpg"), false);
         
-        // Create two vector containing geographical positions and corresponding raster image pixel coordinates
+        // Create two vectors containing geographical positions and corresponding raster image pixel coordinates.
+        // 2, 3 or 4 points may be specified. Usually 2 points are enough (for conformal mapping).
         MapPos pos = proj.fromWgs84(new MapPos(-77.004590, 38.888702));
         double sizeNS = 110, sizeWE = 100;
 
