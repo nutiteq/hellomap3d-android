@@ -14,6 +14,7 @@ import com.nutiteq.utils.AssetUtils;
 import com.nutiteq.vectortiles.MBVectorTileDecoder;
 import com.nutiteq.vectortiles.MBVectorTileStyleSet;
 import com.nutiteq.vectortiles.VectorTileDecoder;
+import com.nutiteq.wrappedcommons.StringMap;
 import com.nutiteq.wrappedcommons.UnsignedCharVector;
 
 /**
@@ -34,7 +35,12 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
         MBTilesTileDataSource tileDataSource = new MBTilesTileDataSource(filePath);
         
         // Now check if we need to use vector layer or raster layer, based on mbtiles metadata
-        String format = tileDataSource.getMetaData().get("format");
+        StringMap metaData = tileDataSource.getMetaData();
+        String format = "png";// default;
+        if(metaData.has_key("format")){
+            format = tileDataSource.getMetaData().get("format");    
+        }
+        
         if ("mbvt".equals(format)) {
             UnsignedCharVector styleBytes = AssetUtils.loadBytes("osmbright.zip");
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
