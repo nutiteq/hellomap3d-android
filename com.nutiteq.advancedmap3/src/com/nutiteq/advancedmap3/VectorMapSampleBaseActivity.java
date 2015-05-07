@@ -22,6 +22,7 @@ import com.nutiteq.wrappedcommons.UnsignedCharVector;
  */
 public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 
+	protected TileDataSource vectorTileDataSource;
     protected MBVectorTileDecoder vectorTileDecoder;
     protected boolean persistentTileCache = true;
     
@@ -126,7 +127,9 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
             }
             
             // Create tile data source for vector tiles
-            TileDataSource vectorTileDataSource = createTileDataSource();
+            if (vectorTileDataSource == null) {
+            	vectorTileDataSource = createTileDataSource();
+            }
 
             // Remove old base layer, create new base layer
             if (baseLayer != null) {
