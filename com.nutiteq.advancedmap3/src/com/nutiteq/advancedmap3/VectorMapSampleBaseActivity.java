@@ -124,6 +124,8 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
             // OSM Bright style set supports choosing between 2d/3d buildings. Set corresponding parameter.
             if (styleAssetName.equals("osmbright.zip")) {
             	vectorTileDecoder.setStyleParameter("buildings3d", styleBuildings3D);
+            	vectorTileDecoder.setStyleParameter("markers3d",styleBuildings3D ? "1" : "0");
+            	vectorTileDecoder.setStyleParameter("texts3d",styleBuildings3D ? "1" : "0");
             }
             
             // Create tile data source for vector tiles

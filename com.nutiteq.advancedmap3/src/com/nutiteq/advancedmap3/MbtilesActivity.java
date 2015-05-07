@@ -4,13 +4,19 @@ import java.io.File;
 import java.io.FileFilter;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
+import com.nutiteq.core.MapBounds;
+import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
+import com.nutiteq.core.ScreenBounds;
+import com.nutiteq.core.ScreenPos;
 import com.nutiteq.datasources.MBTilesTileDataSource;
 import com.nutiteq.filepicker.FilePickerActivity;
 import com.nutiteq.layers.RasterTileLayer;
 import com.nutiteq.layers.VectorTileLayer;
 import com.nutiteq.utils.AssetUtils;
+import com.nutiteq.utils.Log;
 import com.nutiteq.vectortiles.MBVectorTileDecoder;
 import com.nutiteq.vectortiles.MBVectorTileStyleSet;
 import com.nutiteq.vectortiles.VectorTileDecoder;
@@ -41,6 +47,7 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
             format = tileDataSource.getMetaData().get("format");    
         }
         
+        
         if ("mbvt".equals(format)) {
             UnsignedCharVector styleBytes = AssetUtils.loadBytes("osmbright.zip");
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
@@ -53,6 +60,31 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
 
         mapView.getOptions().setZoomRange(new MapRange(0, 18));
         mapView.setZoom(3, 0);
+        
+        // Fit to bounds
+        if(metaData.has_key("bounds")){
+            String[] bounds = tileDataSource.getMetaData().get("bounds").split(",");
+            if(bounds.length == 4){
+                float minLon = Float.parseFloat(bounds[0]);
+                float minLat = Float.parseFloat(bounds[1]);
+                float maxLon = Float.parseFloat(bounds[2]);
+                float maxLat = Float.parseFloat(bounds[3]);
+                
+                DisplayMetrics displaymetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                int height = displaymetrics.heightPixels;
+                int width = displaymetrics.widthPixels;
+                MapBounds dataBounds = new MapBounds(baseProjection.fromWgs84(new MapPos(minLon, minLat)),
+                        baseProjection.fromWgs84(new MapPos(maxLon, maxLat)));
+                
+                mapView.moveToFitBounds(dataBounds,
+                        new ScreenBounds(new ScreenPos(0, 0), new ScreenPos(width, height)),false, 0.0f);
+                Log.debug("moved to metadata bounds " + dataBounds);
+            }
+        }else{
+            Log.debug("No bounds found from metadata");
+        }
+        
     }
 
     @Override
