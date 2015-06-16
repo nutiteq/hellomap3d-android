@@ -1,1 +1,1 @@
-include ':com.nutiteq.advancedmap3'
+include ':com.nutiteq.advancedmap3', ':com.nutiteq.hellomap3'
