@@ -71,13 +71,6 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        Bitmap watermarkImage = BitmapFactory.decodeResource(mapView
-                .getContext().getResources(), R.drawable.tesla_logo);
-        mapView.getOptions().setWatermarkBitmap(
-                BitmapUtils.createBitmapFromAndroidBitmap(watermarkImage));
-
-
         // go to toronto; Canada
         mapView.setZoom(16, 0);
         // mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-79.3748,43.7155)), 0);
