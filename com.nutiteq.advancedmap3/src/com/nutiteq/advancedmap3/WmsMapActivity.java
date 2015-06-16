@@ -17,12 +17,22 @@ public class WmsMapActivity extends VectorMapSampleBaseActivity {
         // MapSampleBaseActivity creates and configures mapView  
         super.onCreate(savedInstanceState);
 
-        String url = "http://kaart.maakaart.ee/geoserver/wms?transparent=true&";
-     
-        String layers = "topp:states";
 
-        HttpWmsTileDataSource wms = new HttpWmsTileDataSource(0, 24, baseProjection, false, url, "", layers, "image/png");
+        // basic Nutiteq sample WMS
+//       String url = "http://kaart.maakaart.ee/geoserver/wms?transparent=true&";
+//       String layers = "topp:states";
+
+        // USGS Base map: http://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer
+        String url = "http://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WmsServer?";
+        String layers = "0";
+
+        HttpWmsTileDataSource wms = new HttpWmsTileDataSource(0, 14, baseProjection, false, url, "", layers, "image/png8");
         RasterTileLayer wmsLayer = new RasterTileLayer(wms);
+
+        // Calculate zoom bias, basically this is needed to 'undo' automatic DPI scaling, we will display original raster with close to 1:1 pixel density
+        double zoomLevelBias = Math.log(mapView.getOptions().getDPI() / 160) / Math.log(2);
+        wmsLayer.setZoomLevelBias((float) zoomLevelBias);
+
         mapView.getLayers().add(wmsLayer);
         
         // finally animate map to map coverage
