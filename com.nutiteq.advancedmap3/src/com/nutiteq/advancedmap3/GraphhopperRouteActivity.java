@@ -3,6 +3,7 @@ package com.nutiteq.advancedmap3;
 import java.io.File;
 import java.io.FileFilter;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -22,19 +23,23 @@ import com.graphhopper.util.StopWatch;
 import com.nutiteq.advancedmap3.listener.RouteMapEventListener;
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
+import com.nutiteq.core.MapVec;
 import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.filepicker.FilePickerActivity;
 import com.nutiteq.layers.VectorLayer;
+import com.nutiteq.styles.BalloonPopupMargins;
 import com.nutiteq.styles.BalloonPopupStyleBuilder;
 import com.nutiteq.styles.LineJointType;
 import com.nutiteq.styles.LineStyleBuilder;
 import com.nutiteq.styles.MarkerStyle;
 import com.nutiteq.styles.MarkerStyleBuilder;
 import com.nutiteq.ui.MapView;
+import com.nutiteq.utils.AssetUtils;
 import com.nutiteq.utils.BitmapUtils;
 import com.nutiteq.vectorelements.BalloonPopup;
 import com.nutiteq.vectorelements.Line;
 import com.nutiteq.vectorelements.Marker;
+import com.nutiteq.vectorelements.NMLModel;
 import com.nutiteq.wrappedcommons.MapPosVector;
 
 /**
@@ -60,15 +65,33 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
     private LocalVectorDataSource routeDataSource;
     private LocalVectorDataSource routeStartStopDataSource;
     private BalloonPopupStyleBuilder balloonPopupStyleBuilder;
+    private NMLModel carModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // go to toronto
-        mapView.setZoom(11,0);
-        mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-79.3748,43.7155)), 0);
-        
+
+        Bitmap watermarkImage = BitmapFactory.decodeResource(mapView
+                .getContext().getResources(), R.drawable.tesla_logo);
+        mapView.getOptions().setWatermarkBitmap(
+                BitmapUtils.createBitmapFromAndroidBitmap(watermarkImage));
+
+
+        // go to toronto; Canada
+        mapView.setZoom(16, 0);
+        // mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-79.3748,43.7155)), 0);
+
+        // NYC
+        mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-73.97539, 40.74435)), 0);
+
+
+        // define layer and datasource for route line and instructions
+        routeDataSource = new LocalVectorDataSource(baseProjection);
+        VectorLayer routeLayer = new VectorLayer(routeDataSource);
+        mapView.getLayers().add(routeLayer);
+
+
         // define layer and datasource for route start and stop markers
         routeStartStopDataSource = new LocalVectorDataSource(baseProjection);
         // Initialize a vector layer with the previous data source
@@ -76,13 +99,9 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         // Add the previous vector layer to the map
         mapView.getLayers().add(vectorLayer);
         // Set visible zoom range for the vector layer
-        vectorLayer.setVisibleZoomRange(new MapRange(0, 20));
+        vectorLayer.setVisibleZoomRange(new MapRange(0, 22));
 
-        // define layer and datasource for route line and instructions
-        routeDataSource = new LocalVectorDataSource(baseProjection);
-        VectorLayer routeLayer = new VectorLayer(routeDataSource);
-        mapView.getLayers().add(routeLayer);
-        
+
         // set route listener
         RouteMapEventListener mapListener = new RouteMapEventListener(this, mapView);
         mapView.setMapEventListener(mapListener);
@@ -93,7 +112,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
 
         // open graph from folder. remove -gh and file name
         openGraph(mapFilePath.replace("-gh", "").substring(0,
-                mapFilePath.replace("-gh", "").lastIndexOf("/")));
+                mapFilePath.replace("-gh", "").lastIndexOf("/")), mapView);
 
         // create markers for start & end, and a layer for them
 
@@ -109,13 +128,21 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         startMarker = new Marker(new MapPos(0, 0), markerStyleBuilder.buildStyle());
         startMarker.setVisible(false);
 
+
         markerStyleBuilder.setColor(new com.nutiteq.graphics.Color(Color.RED));
 
         stopMarker = new Marker(new MapPos(0, 0), markerStyleBuilder.buildStyle());
         stopMarker.setVisible(false);
-        
+
+
+        carModel = new NMLModel(new MapPos(0, 0), AssetUtils.loadBytes("tesla.nml"));
+        carModel.setScale(5);
+
         routeStartStopDataSource.add(startMarker);
         routeStartStopDataSource.add(stopMarker);
+        routeStartStopDataSource.add(carModel);
+
+
 
         markerStyleBuilder.setColor(new com.nutiteq.graphics.Color(Color.WHITE));
         markerStyleBuilder.setBitmap(BitmapUtils
@@ -136,6 +163,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         
         // style for 
         balloonPopupStyleBuilder = new BalloonPopupStyleBuilder();
+        balloonPopupStyleBuilder.setTitleMargins(new BalloonPopupMargins(4,4,4,4));
         
     }
 
@@ -150,23 +178,29 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
             return;
         }
 
-//        stopMarker.setPos(baseProjection.fromWgs84(stopPos));
 
-        new AsyncTask<Void, Void, GHResponse>() {
+        AsyncTask<Void, Void, GHResponse> dijkstrabi = new AsyncTask<Void, Void, GHResponse>() {
             float time;
 
             protected GHResponse doInBackground(Void... v) {
                 StopWatch sw = new StopWatch().start();
                 GHRequest req = new GHRequest(startPos.getY(), startPos.getX(), stopPos.getY(), stopPos.getX())
-                        .setAlgorithm("dijkstrabi")
-                        .putHint("instructions", true)
-                        .putHint("douglas.minprecision", 1);
+                        .setAlgorithm("dijkstrabi");
                 GHResponse resp = gh.route(req);
                 time = sw.stop().getSeconds();
                 return resp;
             }
 
             protected void onPostExecute(GHResponse res) {
+                if (res.hasErrors()) {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Error with route: " + res.getErrors().get(0).toString(),
+                            Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+
                 Log.d(Const.LOG_TAG, "from:" + startPos + " to:"
                         + stopPos + " found path with distance:"
                         + res.getDistance() / 1000f + ", nodes:"
@@ -182,25 +216,66 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
 
                 routeDataSource.removeAll();
 
+                startMarker.setVisible(false);
+
                 routeDataSource.add(createPolyline(startMarker.getGeometry()
                         .getCenterPos(), stopMarker.getGeometry().getCenterPos(), res));
 
                 // add instruction markers
                 InstructionList instructions = res.getInstructions();
+                boolean first = true;
+                boolean second = false;
+                Instruction firstInstruction = null;
+                MapPos firstInstructionPos = null;
                 for (Instruction instruction : instructions) {
-                    Log.d(Const.LOG_TAG, "name: " + instruction.getName()
-                            + " time: " + instruction.getTime() + " dist:"
-                            + Helper.round(instruction.getDistance(), 3)
-                            + " sign:" + instruction.getSign() + " message: "
-                            + instruction.getAnnotation().getMessage()
-                            + " importance:"
-                            + instruction.getAnnotation().getImportance());
-                    createRoutePoint(instruction
-                            .getPoints().getLongitude(0), instruction
-                            .getPoints().getLatitude(0), instruction.getName(),
-                            instruction.getTime(), Helper.round(
-                                    instruction.getDistance(), 3), instruction
-                                    .getSign(),routeDataSource);
+                    if (second){
+                        // rotate car based on first instruction leg azimuth
+                        Log.d(Const.LOG_TAG,"second instruction");
+                        float azimuth =  (float) firstInstruction.calcAzimuth(instruction);
+                        carModel.setRotation(new MapVec(0, 0, 1), 360 - azimuth);
+
+                        // zoom and move map to the first position
+                        mapView.setFocusPos(firstInstructionPos, 1);
+                        mapView.setZoom(18, 1);
+                        mapView.setMapRotation(360 - azimuth, firstInstructionPos, 1);
+                        mapView.setTilt(30, 1);
+                        second=false;
+                    }
+                    if (first) {
+                        Log.d(Const.LOG_TAG,"first instruction");
+                        // set car to first instruction position
+                        firstInstruction = instruction;
+                        first = false;
+                        second = true;
+                        firstInstructionPos = baseProjection.fromWgs84(new MapPos(instruction
+                                .getPoints().getLongitude(0), instruction
+                                .getPoints().getLatitude(0)));
+                        carModel.setPos(firstInstructionPos);
+
+
+                    }else{
+                        Log.d(Const.LOG_TAG, "name: " + instruction.getName()
+                                + " time: " + instruction.getTime() + " dist:"
+                                + Helper.round(instruction.getDistance(), 3)
+                                + " sign:" + instruction.getSign() + " message: "
+                                + instruction.getAnnotation().getMessage()
+                                + " importance:"
+                                + instruction.getAnnotation().getImportance());
+                        createRoutePoint(instruction
+                                        .getPoints().getLongitude(0), instruction
+                                        .getPoints().getLatitude(0), instruction.getName(),
+                                instruction.getTime(), Helper.round(
+                                        instruction.getDistance(), 3), instruction
+                                        .getSign(), routeDataSource);
+                    }
+
+                }
+
+                // give a second to finish animations
+                try {
+                    Thread.sleep(1000);
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
                 }
 
                 shortestPathRunning = false;
@@ -253,15 +328,15 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
     protected Line createPolyline(MapPos start, MapPos end, GHResponse response) {
 
         LineStyleBuilder lineStyleBuilder = new LineStyleBuilder();
-        lineStyleBuilder.setColor(new com.nutiteq.graphics.Color(Color.BLACK));
+        lineStyleBuilder.setColor(new com.nutiteq.graphics.Color(Color.DKGRAY));
         lineStyleBuilder.setLineJointType(LineJointType.LINE_JOINT_TYPE_ROUND);
         lineStyleBuilder.setStretchFactor(2);
-        lineStyleBuilder.setWidth(2);
+        lineStyleBuilder.setWidth(12);
 
         int points = response.getPoints().getSize();
         MapPosVector geoPoints = new MapPosVector();
         PointList tmp = response.getPoints();
-        geoPoints.add(start);
+       // geoPoints.add(start);
         for (int i = 0; i < points; i++) {
             geoPoints.add(baseProjection.fromWgs84(new MapPos(tmp
                     .getLongitude(i), tmp.getLatitude(i))));
@@ -275,18 +350,19 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
     }
 
     // opens GraphHopper graph file
-    void openGraph(final String graphFile) {
+    void openGraph(final String graphFile, final MapView mapView) {
         Log.d(Const.LOG_TAG, "loading graph (" + graphFile + ") ... ");
         new AsyncTask<Void, Void, Path>() {
             protected Path doInBackground(Void... v) {
                 try {
+                    Log.d(Const.LOG_TAG,"try to load "+graphFile);
                     GraphHopper tmpHopp = new GraphHopper().forMobile();
-                    tmpHopp.setCHShortcuts("fastest");
                     tmpHopp.load(graphFile);
-                    Log.d(Const.LOG_TAG, "found graph with "
+                    Log.d(Const.LOG_TAG, "loaded graph with "
                             + tmpHopp.getGraph().getNodes() + " nodes");
                     gh = tmpHopp;
                     graphLoaded = true;
+
                 } catch (Throwable t) {
                     Log.e(Const.LOG_TAG, t.getMessage());
                     errorLoading = true;
@@ -296,14 +372,16 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
             }
 
             protected void onPostExecute(Path o) {
-                if (graphLoaded)
+                if (graphLoaded){
+                    Log.d(Const.LOG_TAG,"minLon = " + gh.getGraph().getBounds().minLon);
                     Toast.makeText(
                             getApplicationContext(),
-                            "graph loaded, click on map to set route start and end",
-                            Toast.LENGTH_SHORT).show();
+                            "graph loaded, long-click on map to set route start and end",
+                            Toast.LENGTH_LONG).show();
+                }
                 else
                     Toast.makeText(getApplicationContext(),
-                            "graph loading problem", Toast.LENGTH_SHORT).show();
+                            "graph loading problem", Toast.LENGTH_LONG).show();
             }
         }.execute();
     }
@@ -314,7 +392,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
 
     @Override
     public String getFileSelectMessage() {
-        return "Select .map file in graphhopper graph (<mapname>_gh folder)";
+        return "Select properties file from graphhopper graph (<mapname>_gh folder)";
     }
 
     @Override
@@ -327,7 +405,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
                     if (file.isDirectory()) {
                         // allow to select any directory
                         return true;
-                    } else if (file.isFile() && file.getName().endsWith(".map")) {
+                    } else if (file.isFile() && file.getName().endsWith("properties")) {
                         // accept files with given extension
                         return true;
                     }
@@ -341,6 +419,9 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         routeDataSource.removeAll();
         stopMarker.setVisible(false);
         startMarker.setPos(startPos);
+
+        //carModel.setPos(startPos);
+
         startMarker.setVisible(true);
     }
 
