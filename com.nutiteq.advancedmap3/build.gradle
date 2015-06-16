@@ -44,8 +44,9 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a', 'armeabi'
-            universalApk true
+      //      include 'x86', 'armeabi-v7a', 'armeabi'
+            include 'armeabi-v7a'
+            universalApk false
         }
     }
 
@@ -67,5 +68,9 @@ native_dependencies {
 
 dependencies {
     compile "com.nutiteq:nutiteq-3d-sdk:3.1.0"
-    compile "com.graphhopper:graphhopper:0.3"
+    compile(group: 'com.graphhopper', name: 'graphhopper', version: '0.4.1') {
+        exclude group: 'com.google.protobuf', module: 'protobuf-java'
+        exclude group: 'org.openstreetmap.osmosis', module: 'osmosis-osm-binary'
+        exclude group: 'org.apache.xmlgraphics', module: 'xmlgraphics-commons'
+    }
 }
