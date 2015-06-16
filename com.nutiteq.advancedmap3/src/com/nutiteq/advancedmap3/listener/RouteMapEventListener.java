@@ -5,6 +5,7 @@ import android.util.Log;
 import com.nutiteq.advancedmap3.Const;
 import com.nutiteq.advancedmap3.GraphhopperRouteActivity;
 import com.nutiteq.core.MapPos;
+import com.nutiteq.ui.ClickType;
 import com.nutiteq.ui.MapClickInfo;
 import com.nutiteq.ui.MapEventListener;
 import com.nutiteq.ui.MapView;
@@ -34,26 +35,30 @@ public class RouteMapEventListener extends MapEventListener {
 	// Map View manipulation handlers
 	@Override
 	public void onMapClicked(MapClickInfo mapClickInfo) {
+
+	if(mapClickInfo.getClickType() == ClickType.CLICK_TYPE_LONG){
+
 		// x and y are in base map projection, we convert them to the familiar
 		// WGS84
-	    MapPos clickPos = mapClickInfo.getClickPos();
-	    MapPos wgs84Clickpos = mapView.getOptions().getBaseProjection().toWgs84(clickPos);
+		MapPos clickPos = mapClickInfo.getClickPos();
+		MapPos wgs84Clickpos = mapView.getOptions().getBaseProjection().toWgs84(clickPos);
 		Log.d(Const.LOG_TAG,"onMapClicked " + wgs84Clickpos);
-		
+
 		if(startPos == null){
-		    // set start, or start again
-		    startPos = wgs84Clickpos;
-		    activity.setStartMarker(clickPos);
+			// set start, or start again
+			startPos = wgs84Clickpos;
+			activity.setStartMarker(clickPos);
 		}else if(stopPos == null){
-		    // set stop and calculate
-		    stopPos = wgs84Clickpos;
-		    activity.setStopMarker(clickPos);
-	        activity.showRoute(startPos, stopPos);
-		 
-	        // restart to force new route next time
-	        startPos = null;
-	        stopPos = null;
+			// set stop and calculate
+			stopPos = wgs84Clickpos;
+			activity.setStopMarker(clickPos);
+			activity.showRoute(startPos, stopPos);
+
+			// restart to force new route next time
+			startPos = null;
+			stopPos = null;
 		}
+	}
 		
 	}
 
