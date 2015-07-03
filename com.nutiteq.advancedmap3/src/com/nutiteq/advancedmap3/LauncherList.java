@@ -35,6 +35,7 @@ public class LauncherList extends ListActivity{
             {GraphhopperRouteActivity.class,FilePicker.class},
     		{PackageManagerActivity.class,null},
             {WmsMapActivity.class,null},
+            {ClusterMapActivity.class,null}
     };
 
     @Override
