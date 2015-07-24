@@ -3,7 +3,6 @@ package com.nutiteq.advancedmap3;
 import android.os.Bundle;
 
 import com.nutiteq.advancedmap3.datasource.MyHttpTileDataSource;
-import com.nutiteq.datasources.HTTPTileDataSource;
 import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.RasterTileLayer;
 

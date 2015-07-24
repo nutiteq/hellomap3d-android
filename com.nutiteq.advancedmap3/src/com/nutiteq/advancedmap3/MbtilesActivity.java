@@ -59,32 +59,35 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
         mapView.getLayers().add(baseLayer);
 
         mapView.getOptions().setZoomRange(new MapRange(0, 18));
-        mapView.setZoom(3, 0);
-        
+                
         // Fit to bounds
-        if(metaData.has_key("bounds")){
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        int width = displaymetrics.widthPixels;
+        if (metaData.has_key("bounds")) {
             String[] bounds = tileDataSource.getMetaData().get("bounds").split(",");
-            if(bounds.length == 4){
+            if (bounds.length == 4) {
                 float minLon = Float.parseFloat(bounds[0]);
                 float minLat = Float.parseFloat(bounds[1]);
                 float maxLon = Float.parseFloat(bounds[2]);
                 float maxLat = Float.parseFloat(bounds[3]);
                 
-                DisplayMetrics displaymetrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int height = displaymetrics.heightPixels;
-                int width = displaymetrics.widthPixels;
                 MapBounds dataBounds = new MapBounds(baseProjection.fromWgs84(new MapPos(minLon, minLat)),
                         baseProjection.fromWgs84(new MapPos(maxLon, maxLat)));
                 
                 mapView.moveToFitBounds(dataBounds,
-                        new ScreenBounds(new ScreenPos(0, 0), new ScreenPos(width, height)),false, 0.0f);
+                        new ScreenBounds(new ScreenPos(0, 0), new ScreenPos(width, height)),
+                        false, 0.0f);
                 Log.debug("moved to metadata bounds " + dataBounds);
             }
-        }else{
-            Log.debug("No bounds found from metadata");
-        }
-        
+        } else {
+            MapBounds dataBounds = tileDataSource.getDataExtent();
+            mapView.moveToFitBounds(dataBounds,
+            		new ScreenBounds(new ScreenPos(0, 0), new ScreenPos(width, height)),
+            		false, 0.0f);
+            Log.debug("No bounds found from metadata, detected bounds" + dataBounds);
+        }        
     }
 
     @Override
