@@ -24,10 +24,10 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 
 	protected TileDataSource vectorTileDataSource;
     protected MBVectorTileDecoder vectorTileDecoder;
-    protected boolean persistentTileCache = true;
+    protected boolean persistentTileCache = false;
     
     // Style parameters
-    protected String vectorStyleName = "osmbright"; // default style name, each style has corresponding .zip asset
+    protected String vectorStyleName = "nutibright"; // default style name, each style has corresponding .zip asset
     protected String vectorStyleLang = "en"; // default map language
 
     @Override
@@ -53,8 +53,8 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
    	
     	Menu styleMenu = menu.addSubMenu("Style");
     	addStyleMenuOption(styleMenu, "Basic", "basic");
-    	addStyleMenuOption(styleMenu, "OSM Bright 2D", "osmbright");
-    	addStyleMenuOption(styleMenu, "OSM Bright 3D", "osmbright3d");
+    	addStyleMenuOption(styleMenu, "NutiBright 2D", "nutibright");
+    	addStyleMenuOption(styleMenu, "NutiBright 3D", "nutibright3d");
     	addStyleMenuOption(styleMenu, "OSM Bright Chinese", "osmbright-heilight");
     	addStyleMenuOption(styleMenu, "Loose Leaf", "looseleaf");
 
@@ -108,8 +108,8 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     private void updateBaseLayer() {
     	String styleAssetName = vectorStyleName + ".zip";
     	boolean styleBuildings3D = false;
-    	if (vectorStyleName.equals("osmbright3d")) {
-    		styleAssetName = "osmbright.zip";
+    	if (vectorStyleName.equals("nutibright3d")) {
+    		styleAssetName = "nutibright.zip";
     		styleBuildings3D = true;
     	}
         UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
@@ -122,7 +122,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
             vectorTileDecoder.setStyleParameter("lang", vectorStyleLang);
             
             // OSM Bright style set supports choosing between 2d/3d buildings. Set corresponding parameter.
-            if (styleAssetName.equals("osmbright.zip")) {
+            if (styleAssetName.equals("nutibright.zip")) {
             	vectorTileDecoder.setStyleParameter("buildings3d", styleBuildings3D);
             	vectorTileDecoder.setStyleParameter("markers3d",styleBuildings3D ? "1" : "0");
             	vectorTileDecoder.setStyleParameter("texts3d",styleBuildings3D ? "1" : "0");
@@ -145,7 +145,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     }
     
     protected TileDataSource createTileDataSource() {
-        TileDataSource vectorTileDataSource = new NutiteqOnlineTileDataSource("nutiteq.mbstreets");
+        TileDataSource vectorTileDataSource = new NutiteqOnlineTileDataSource("nutiteq.osm");
 
         // We don't use vectorTileDataSource directly (this would be also option),
         // but via caching to cache data locally persistently/non-persistently
