@@ -102,9 +102,9 @@ public class ClusterMapActivity extends VectorMapSampleBaseActivity {
                         properties.getString("Country"));
 
                 // add all properties as MetaData, so you can use it with click handling
-                for(@SuppressWarnings("unchecked")
-				Iterator<Object> j = properties.keys(); j.hasNext();){
-                    String key = (String) j.next();
+                for(
+				Iterator<String> j = properties.keys(); j.hasNext();){
+                    String key = j.next();
                     String val = properties.getString(key);
                     popup.setMetaDataElement(key,val);
                 }
