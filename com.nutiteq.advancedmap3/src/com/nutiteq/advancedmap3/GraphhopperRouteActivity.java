@@ -3,7 +3,6 @@ package com.nutiteq.advancedmap3;
 import java.io.File;
 import java.io.FileFilter;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Path;

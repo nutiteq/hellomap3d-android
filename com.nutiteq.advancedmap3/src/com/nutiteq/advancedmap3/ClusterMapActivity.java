@@ -1,7 +1,5 @@
 package com.nutiteq.advancedmap3;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.nutiteq.core.MapPos;
@@ -12,12 +10,9 @@ import com.nutiteq.geometry.Geometry;
 import com.nutiteq.layers.ClusterElementBuilder;
 import com.nutiteq.layers.ClusteredVectorLayer;
 import com.nutiteq.layers.VectorLayer;
+import com.nutiteq.styles.BalloonPopupStyle;
 import com.nutiteq.styles.BalloonPopupStyleBuilder;
-import com.nutiteq.styles.MarkerStyle;
-import com.nutiteq.styles.MarkerStyleBuilder;
-import com.nutiteq.utils.BitmapUtils;
 import com.nutiteq.vectorelements.BalloonPopup;
-import com.nutiteq.vectorelements.Marker;
 import com.nutiteq.vectorelements.VectorElement;
 import com.nutiteq.wrappedcommons.VectorElementVector;
 
@@ -39,6 +34,29 @@ import java.util.Iterator;
  * 3. Make sure you reuse cluster style bitmaps. Creating new bitmap in rendering has technical cost
  */
 public class ClusterMapActivity extends VectorMapSampleBaseActivity {
+
+    class MyClusterElementBuilder extends ClusterElementBuilder {
+        BalloonPopupStyle balloonPopupStyle;
+
+        public MyClusterElementBuilder(){
+        	balloonPopupStyle = new BalloonPopupStyleBuilder().buildStyle();
+        }
+        
+        @Override
+        public VectorElement buildClusterElement(MapPos pos, VectorElementVector elements) {
+
+            // Cluster popup has just a number of cluster elements, and default style
+            // You can create here also Marker, Point etc. Point is suggested for big number of objects
+            // Note: pos has center of the cluster coordinates
+
+            BalloonPopup popup = new BalloonPopup(
+                    pos,
+                    balloonPopupStyle,
+                    Long.toString(elements.size()), "");
+            return popup;
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +85,8 @@ public class ClusterMapActivity extends VectorMapSampleBaseActivity {
             BalloonPopupStyleBuilder balloonPopupStyleBuilder = new BalloonPopupStyleBuilder();
 
             JSONArray features = json.getJSONArray("features");
-            for(int i=0;i<features.length();i++)
-            {
-                JSONObject feature =(JSONObject) features.get(i);
-                String featureType = feature.getString("type");
+            for(int i=0;i<features.length();i++) {
+                JSONObject feature = (JSONObject) features.get(i);
                 JSONObject geometry = feature.getJSONObject("geometry");
 
                 // use SDK GeoJSON parser
@@ -86,7 +102,8 @@ public class ClusterMapActivity extends VectorMapSampleBaseActivity {
                         properties.getString("Country"));
 
                 // add all properties as MetaData, so you can use it with click handling
-                for(Iterator j = properties.keys(); j.hasNext();){
+                for(@SuppressWarnings("unchecked")
+				Iterator<Object> j = properties.keys(); j.hasNext();){
                     String key = (String) j.next();
                     String val = properties.getString(key);
                     popup.setMetaDataElement(key,val);
@@ -117,28 +134,4 @@ public class ClusterMapActivity extends VectorMapSampleBaseActivity {
         }
         return json;
     }
-
-    class MyClusterElementBuilder extends ClusterElementBuilder
-    {
-        BalloonPopupStyleBuilder balloonPopupStyleBuilder;
-
-        public MyClusterElementBuilder(){
-        balloonPopupStyleBuilder = new BalloonPopupStyleBuilder();
-    }
-
-    @Override
-    public VectorElement buildClusterElement(MapPos pos, VectorElementVector elements) {
-
-        // Cluster popup has just a number of cluster elements, and default style
-        // You can create here also Marker, Point etc. Point is suggested for big number of objects
-        // Note: pos has center of the cluster coordinates
-
-        BalloonPopup popup = new BalloonPopup(
-                pos,
-                balloonPopupStyleBuilder.buildStyle(),
-                Long.toString(elements.size()), "");
-        return popup;
-    }
-
-}
 }

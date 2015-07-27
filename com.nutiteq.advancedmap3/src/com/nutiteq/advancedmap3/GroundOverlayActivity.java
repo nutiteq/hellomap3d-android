@@ -1,18 +1,15 @@
 package com.nutiteq.advancedmap3;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.ScreenPos;
 import com.nutiteq.datasources.BitmapOverlayRasterTileDataSource;
+import com.nutiteq.graphics.Bitmap;
 import com.nutiteq.layers.RasterTileLayer;
 import com.nutiteq.layers.TileSubstitutionPolicy;
 import com.nutiteq.projections.Projection;
-import com.nutiteq.utils.AssetUtils;
 import com.nutiteq.utils.BitmapUtils;
-import com.nutiteq.vectorelements.Marker;
 import com.nutiteq.wrappedcommons.MapPosVector;
 import com.nutiteq.wrappedcommons.ScreenPosVector;
 
@@ -35,7 +32,7 @@ public class GroundOverlayActivity extends VectorMapSampleBaseActivity {
         // Load ground overlay bitmap
         //Bitmap androidMarkerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.jefferson);
         //com.nutiteq.graphics.Bitmap overlayBitmap = BitmapUtils.createBitmapFromAndroidBitmap(androidMarkerBitmap);
-        com.nutiteq.graphics.Bitmap overlayBitmap = new com.nutiteq.graphics.Bitmap(AssetUtils.loadBytes("jefferson-building-ground-floor.jpg"), false);
+        Bitmap overlayBitmap = BitmapUtils.loadBitmapFromAssets("jefferson-building-ground-floor.jpg", false);
         
         // Create two vectors containing geographical positions and corresponding raster image pixel coordinates.
         // 2, 3 or 4 points may be specified. Usually 2 points are enough (for conformal mapping).
