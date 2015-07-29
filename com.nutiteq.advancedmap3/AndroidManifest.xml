@@ -41,7 +41,8 @@
         <activity android:name="com.nutiteq.advancedmap3.GraphhopperRouteActivity" />
         <activity android:name="com.nutiteq.advancedmap3.MbtilesActivity" />
         <activity android:name="com.nutiteq.advancedmap3.WmsMapActivity" />
-        <activity android:name="com.nutiteq.advancedmap3.ClusterMapActivity" />
+        <activity android:name="com.nutiteq.advancedmap3.ClusteredRandomPointsActivity" />
+        <activity android:name="com.nutiteq.advancedmap3.ClusteredGeoJsonActivity" />
         <activity android:name="com.nutiteq.filepicker.FilePicker" />
     </application>
 

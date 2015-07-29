@@ -33,7 +33,7 @@ import java.util.Iterator;
  * 2. Instead of Balloon with text generate dynamically Point bitmap with cluster numbers
  * 3. Make sure you reuse cluster style bitmaps. Creating new bitmap in rendering has technical cost
  */
-public class ClusterMapActivity extends VectorMapSampleBaseActivity {
+public class ClusteredGeoJsonActivity extends VectorMapSampleBaseActivity {
 
     class MyClusterElementBuilder extends ClusterElementBuilder {
         BalloonPopupStyle balloonPopupStyle;
