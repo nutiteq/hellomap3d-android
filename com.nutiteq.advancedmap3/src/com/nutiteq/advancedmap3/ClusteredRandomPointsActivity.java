@@ -47,6 +47,7 @@ public class ClusteredRandomPointsActivity extends VectorMapSampleBaseActivity {
 
 		@Override
 		public VectorElement buildClusterElement(MapPos pos, VectorElementVector elements) {
+			// Try to reuse existing marker styles
 			MarkerStyle style = markerStyles.get((int) elements.size());
 			if (elements.size() == 1) {
 				style = ((Marker) elements.get(0)).getStyle();
