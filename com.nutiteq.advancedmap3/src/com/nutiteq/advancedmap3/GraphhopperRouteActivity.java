@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Path;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,9 +21,12 @@ import com.graphhopper.util.InstructionList;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.StopWatch;
 import com.nutiteq.advancedmap3.listener.RouteMapEventListener;
+import com.nutiteq.core.MapBounds;
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
 import com.nutiteq.core.MapVec;
+import com.nutiteq.core.ScreenBounds;
+import com.nutiteq.core.ScreenPos;
 import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.filepicker.FilePickerActivity;
 import com.nutiteq.layers.VectorLayer;
@@ -69,14 +73,6 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // go to toronto; Canada
-        mapView.setZoom(16, 0);
-        // mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-79.3748,43.7155)), 0);
-
-        // NYC
-        mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-73.97539, 40.74435)), 0);
-
 
         // define layer and datasource for route line and instructions
         routeDataSource = new LocalVectorDataSource(baseProjection);
@@ -133,8 +129,6 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         routeStartStopDataSource.add(startMarker);
         routeStartStopDataSource.add(stopMarker);
         routeStartStopDataSource.add(carModel);
-
-
 
         markerStyleBuilder.setColor(new com.nutiteq.graphics.Color(Color.WHITE));
         markerStyleBuilder.setBitmap(BitmapUtils
@@ -366,6 +360,24 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
             protected void onPostExecute(Path o) {
                 if (graphLoaded){
                     Log.d(Const.LOG_TAG,"minLon = " + gh.getGraphHopperStorage().getBounds().minLon);
+
+                    // Fit to bounds
+                    DisplayMetrics displaymetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                    int height = displaymetrics.heightPixels;
+                    int width = displaymetrics.widthPixels;
+                    MapBounds dataBounds = new MapBounds(
+                            baseProjection.fromWgs84(new MapPos(
+                                    gh.getGraphHopperStorage().getBounds().minLon,
+                                    gh.getGraphHopperStorage().getBounds().minLat)),
+                            baseProjection.fromWgs84(new MapPos(
+                                    gh.getGraphHopperStorage().getBounds().maxLon,
+                                    gh.getGraphHopperStorage().getBounds().maxLat)));
+
+                    mapView.moveToFitBounds(dataBounds,
+                            new ScreenBounds(new ScreenPos(0, 0), new ScreenPos(width, height)),
+                            false, 0.0f);
+
                     Toast.makeText(
                             getApplicationContext(),
                             "graph loaded, long-click on map to set route start and end",
