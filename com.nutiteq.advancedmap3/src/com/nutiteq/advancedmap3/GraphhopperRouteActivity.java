@@ -347,11 +347,11 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
         new AsyncTask<Void, Void, Path>() {
             protected Path doInBackground(Void... v) {
                 try {
-                    Log.d(Const.LOG_TAG,"try to load "+graphFile);
+                    Log.d(Const.LOG_TAG, "try to load " + graphFile);
                     GraphHopper tmpHopp = new GraphHopper().forMobile();
                     tmpHopp.load(graphFile);
                     Log.d(Const.LOG_TAG, "loaded graph with "
-                            + tmpHopp.getGraph().getNodes() + " nodes");
+                            + tmpHopp.getGraphHopperStorage().getNodes() + " nodes");
                     gh = tmpHopp;
                     graphLoaded = true;
 
@@ -365,7 +365,7 @@ public class GraphhopperRouteActivity extends VectorMapSampleBaseActivity implem
 
             protected void onPostExecute(Path o) {
                 if (graphLoaded){
-                    Log.d(Const.LOG_TAG,"minLon = " + gh.getGraph().getBounds().minLon);
+                    Log.d(Const.LOG_TAG,"minLon = " + gh.getGraphHopperStorage().getBounds().minLon);
                     Toast.makeText(
                             getApplicationContext(),
                             "graph loaded, long-click on map to set route start and end",
