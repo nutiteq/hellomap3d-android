@@ -36,7 +36,9 @@ public class LauncherList extends ListActivity{
     		{PackageManagerActivity.class,null},
             {WmsMapActivity.class,null},
             {ClusteredRandomPointsActivity.class,null},
-            {ClusteredGeoJsonActivity.class,null}
+            {ClusteredGeoJsonActivity.class,null},
+            {MyLocationActivity.class,null}
+
     };
 
     @Override
