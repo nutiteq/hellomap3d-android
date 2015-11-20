@@ -59,14 +59,6 @@ tasks.create(name: 'exportLibs', type: Copy) {
 
 
 dependencies {
-
     // to include nutiteq SDK from online repository see hellomap gradle conf
-
     compile files('libs/nutiteq-maps-sdk.jar')
-
-    compile(group: 'com.graphhopper', name: 'graphhopper', version: '0.5.0') {
-        exclude group: 'com.google.protobuf', module: 'protobuf-java'
-        exclude group: 'org.openstreetmap.osmosis', module: 'osmosis-osm-binary'
-        exclude group: 'org.apache.xmlgraphics', module: 'xmlgraphics-commons'
-    }
 }
