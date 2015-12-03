@@ -32,7 +32,6 @@ public class LauncherList extends ListActivity{
             {AerialMapActivity.class,null},
             {CustomRasterDataSourceActivity.class,null},
             {CustomPopupActivity.class,null},
-            {OfflineRoutingActivity.class,null},
     		{PackageManagerActivity.class,null},
             {WmsMapActivity.class,null},
             {ClusteredRandomPointsActivity.class,null},

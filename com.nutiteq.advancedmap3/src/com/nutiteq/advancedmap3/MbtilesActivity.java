@@ -49,7 +49,7 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
         
         
         if ("mbvt".equals(format)) {
-            UnsignedCharVector styleBytes = AssetUtils.loadBytes("osmbright.zip");
+            UnsignedCharVector styleBytes = AssetUtils.loadBytes("nutibright-v2a.zip");
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
             VectorTileDecoder vectorTileDecoder = new MBVectorTileDecoder(vectorTileStyleSet);
         	baseLayer = new VectorTileLayer(tileDataSource, vectorTileDecoder);
