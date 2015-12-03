@@ -48,8 +48,8 @@ public class MainActivity extends Activity {
         mapView.setMapRotation(0, 0);
         mapView.setTilt(90, 0);
         
-        // Create base layer. Use vector style from assets (osmbright.zip)
-        VectorTileLayer baseLayer = new NutiteqOnlineVectorTileLayer("osmbright.zip");
+        // Create base layer. Use vector style from assets (nutibright.zip)
+        VectorTileLayer baseLayer = new NutiteqOnlineVectorTileLayer("nutibright-v2.zip");
         mapView.getLayers().add(baseLayer);
                 
         // 2. Add a pin marker to map
