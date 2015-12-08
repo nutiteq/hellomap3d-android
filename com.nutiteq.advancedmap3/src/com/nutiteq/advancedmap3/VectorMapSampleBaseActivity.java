@@ -55,9 +55,10 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
    	
     	Menu styleMenu = menu.addSubMenu("Style");
     	addStyleMenuOption(styleMenu, "Basic", "basic");
-    	addStyleMenuOption(styleMenu, "NutiBright 2D", "nutibright-v2");
+    	addStyleMenuOption(styleMenu, "NutiBright 2D", "nutibright-v2a");
     	addStyleMenuOption(styleMenu, "NutiBright 3D", "nutibright3d");
     	addStyleMenuOption(styleMenu, "Loose Leaf", "looseleaf");
+		addStyleMenuOption(styleMenu, "Nutiteq dark", "nutiteq-dark");
 
     	return true;
     }
