@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
         mapView.setTilt(90, 0);
         
         // Create base layer. Use vector style from assets (nutibright.zip)
-        VectorTileLayer baseLayer = new NutiteqOnlineVectorTileLayer("nutibright-v2.zip");
+        VectorTileLayer baseLayer = new NutiteqOnlineVectorTileLayer("nutibright-v2a.zip");
         mapView.getLayers().add(baseLayer);
                 
         // 2. Add a pin marker to map
