@@ -253,7 +253,7 @@ public class PackageManagerActivity extends ListActivity {
         if (!(packageFolder.mkdirs() || packageFolder.isDirectory())) {
         	Log.e(Const.LOG_TAG, "Could not create package folder!");
         }
-        packageManager = new NutiteqPackageManager("nutiteq.mbstreets", packageFolder.getAbsolutePath());
+        packageManager = new NutiteqPackageManager("nutiteq.osm", packageFolder.getAbsolutePath());
         packageManager.setPackageManagerListener(new PackageListener());
     	packageManager.startPackageListDownload();
 
