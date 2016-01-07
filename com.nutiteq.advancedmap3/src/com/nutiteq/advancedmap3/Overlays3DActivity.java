@@ -62,11 +62,12 @@ public class Overlays3DActivity extends VectorMapSampleBaseActivity {
         polygon3DPoses.add(baseProjection.fromWgs84(new MapPos(24.650736, 59.416703)));
         polygon3DPoses.add(baseProjection.fromWgs84(new MapPos(24.646444, 59.416245)));
         // Create 3d polygon holes poses
+        MapPosVector polygon3DHolePoses = new MapPosVector();
+        polygon3DHolePoses.add(baseProjection.fromWgs84(new MapPos(24.643409, 59.411922)));
+        polygon3DHolePoses.add(baseProjection.fromWgs84(new MapPos(24.651207, 59.412896)));
+        polygon3DHolePoses.add(baseProjection.fromWgs84(new MapPos(24.643207, 59.414411)));
         MapPosVectorVector polygon3DHoles = new MapPosVectorVector();
-        polygon3DHoles.add(new MapPosVector());
-        polygon3DHoles.get(0).add(baseProjection.fromWgs84(new MapPos(24.643409, 59.411922)));
-        polygon3DHoles.get(0).add(baseProjection.fromWgs84(new MapPos(24.651207, 59.412896)));
-        polygon3DHoles.get(0).add(baseProjection.fromWgs84(new MapPos(24.643207, 59.414411)));
+        polygon3DHoles.add(polygon3DHolePoses);
         // Add to datasource
         Polygon3D polygon3D = new Polygon3D(polygon3DPoses, polygon3DHoles, polygon3DStyleBuilder.buildStyle(), 150);
         polygon3D.setMetaDataElement("ClickText", "3D Polygon");
