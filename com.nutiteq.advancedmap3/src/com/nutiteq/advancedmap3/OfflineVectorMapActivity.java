@@ -23,14 +23,14 @@ public class OfflineVectorMapActivity extends VectorMapSampleBaseActivity {
         super.onCreate(savedInstanceState);
         
         // Limit zoom range, as we have tiles only up to level 5
-        mapView.getOptions().setZoomRange(new MapRange(0,6));
+        mapView.getOptions().setZoomRange(new MapRange(0,20));
         mapView.setZoom(3, 0);
     }
     
     @Override
     protected TileDataSource createTileDataSource() {
         // offline map data source
-        String mbTileFile = "world_ntvt_0_4.mbtiles";
+        String mbTileFile = "world_zoom5.mbtiles";
 
         try {
             String localDir = getExternalFilesDir(null).toString();
