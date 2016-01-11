@@ -54,7 +54,16 @@ import com.nutiteq.wrappedcommons.RoutingInstructionVector;
  */
 public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
 
-	/**
+
+    // add packages what you want to download
+    private static String[] PACKAGE_IDS = new String[]{"EE-routing",
+            "LT-routing"};
+
+    private static String ROUTING_PACKAGEMANAGER_SOURCE = "routing:nutiteq.osm.car";
+    private static String ROUTING_SERVICE_SOURCE = "nutiteq.osm.car";
+
+
+    /**
 	 * This MapListener waits for two clicks on map - first to set routing start point, and then
 	 * second to mark end point and start routing service.
 	 */
@@ -104,15 +113,37 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
     	@Override
     	public void onPackageListUpdated() {
 			Log.d(Const.LOG_TAG, "Package list updated");
-    		PackageStatus status = packageManager.getLocalPackageStatus(PACKAGE_ID, -1);
-    		if (status == null) {
-    			packageManager.startPackageDownload(PACKAGE_ID);
-    		} else if (status.getCurrentAction() == PackageAction.PACKAGE_ACTION_READY) {
-    			offlinePackageReady = true;
-    		}
+
+            int downloadedPackages = 0;
+            for(int i=0; i<PACKAGE_IDS.length;i++){
+                boolean alreadyDownloaded = getPackageIfNotExists(PACKAGE_IDS[i]);
+                if(alreadyDownloaded){
+                    downloadedPackages ++;
+                }
+            }
+
+            // if all downloaded, can start with offline routing
+            if(downloadedPackages == PACKAGE_IDS.length){
+                offlinePackageReady = true;
+            }
+ 
+
     	}
-    	
-		@Override
+
+        private boolean getPackageIfNotExists(String packageId) {
+            PackageStatus status = packageManager.getLocalPackageStatus(packageId, -1);
+            if (status == null) {
+                packageManager.startPackageDownload(packageId);
+                return false;
+            }else if(status.getCurrentAction() == PackageAction.PACKAGE_ACTION_READY){
+                Log.d(Const.LOG_TAG, packageId + " is downloaded and ready");
+                return true;
+            }
+
+            return false;
+        }
+
+        @Override
 		public void onPackageListFailed() {
 			Log.e(Const.LOG_TAG, "Package list update failed");
 		}
@@ -128,7 +159,8 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
     	@Override
     	public void onPackageUpdated(String id, int version) {
 			Log.d(Const.LOG_TAG, "Offline package updated: " + id);
-    		if (id.equals(PACKAGE_ID)) {
+            // if last downloaded
+    		if (id.equals(PACKAGE_IDS[PACKAGE_IDS.length-1])) {
     			offlinePackageReady = true;        			
     		}
     	}
@@ -138,10 +170,7 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
 			Log.e(Const.LOG_TAG, "Offline package update failed: " + id);
 		}
 	}
-	
-	private static String PACKAGE_ID = "EE-routing";
-	private static String ROUTING_PACKAGEMANAGER_SOURCE = "routing:nutiteq.osm.car";
-	private static String ROUTING_SERVICE_SOURCE = "nutiteq.osm.car";
+
 
     private RoutingService onlineRoutingService;
     private RoutingService offlineRoutingService;
@@ -156,7 +185,6 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
     private LocalVectorDataSource routeDataSource;
     private LocalVectorDataSource routeStartStopDataSource;
     private BalloonPopupStyleBuilder balloonPopupStyleBuilder;
-    private NMLModel carModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -220,12 +248,9 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
         stopMarker.setVisible(false);
 
 
-        carModel = new NMLModel(new MapPos(0, 0), AssetUtils.loadBytes("tesla.nml"));
-        carModel.setScale(5);
 
         routeStartStopDataSource.add(startMarker);
         routeStartStopDataSource.add(stopMarker);
-        routeStartStopDataSource.add(carModel);
 
         markerStyleBuilder.setColor(new com.nutiteq.graphics.Color(Color.WHITE));
         markerStyleBuilder.setBitmap(BitmapUtils
@@ -251,6 +276,10 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
         // finally animate map to Estonia
         mapView.setFocusPos(mapView.getOptions().getBaseProjection().fromWgs84(new MapPos(25.662893, 58.919365)), 0);
         mapView.setZoom(7, 0);
+
+        Toast.makeText(getApplicationContext(), "Long-press on map to set route start and finish", Toast.LENGTH_LONG).show();
+
+
     }
 
     public void showRoute(final MapPos startPos, final MapPos stopPos) {
@@ -268,7 +297,10 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
 
         AsyncTask<Void, Void, RoutingResult> task = new AsyncTask<Void, Void, RoutingResult>() {
 
+            public long timeStart;
+
             protected RoutingResult doInBackground(Void... v) {
+                timeStart = System.currentTimeMillis();
                 MapPosVector poses = new MapPosVector();
                 poses.add(startPos);
                 poses.add(stopPos);
@@ -285,13 +317,17 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
             protected void onPostExecute(RoutingResult result) {
             	if (result == null) {
                     Toast.makeText(getApplicationContext(), "Routing failed", Toast.LENGTH_LONG).show();
+                    shortestPathRunning = false;
                     return;
                 }
 
+                String routeText = "The route is " + (int) (result.getTotalDistance() / 100) / 10f
+                        + "km (" + secondsToHours((int) result.getTotalTime())
+                        + ") calculation: " + (System.currentTimeMillis() - timeStart) + " ms";
+                Log.i(Const.LOG_TAG,routeText);
                 Toast.makeText(getApplicationContext(),
-                    "The route is " + (int) (result.getTotalDistance() / 100) / 10f
-                                + "km long, duration " + (int)result.getTotalTime()
-                                + "s", Toast.LENGTH_LONG).show();
+                        routeText
+                        , Toast.LENGTH_LONG).show();
 
                 routeDataSource.removeAll();
 
@@ -310,20 +346,18 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
                         // set car to first instruction position
                         first = false;
                         MapPos firstInstructionPos = result.getPoints().get(instruction.getPointIndex());
-                        carModel.setPos(firstInstructionPos);
 
                         // rotate car based on first instruction leg azimuth
                         float azimuth =  (float) instruction.getAzimuth();
-                        carModel.setRotation(new MapVec(0, 0, 1), 360 - azimuth);
 
-                        // zoom and move map to the first position
-                        mapView.setFocusPos(firstInstructionPos, 1);
-                        mapView.setZoom(18, 1);
-                        mapView.setMapRotation(360 - azimuth, firstInstructionPos, 1);
-                        mapView.setTilt(30, 1);
+                        // zoom and move map to the first position, to make it navigation-like
+//                        mapView.setFocusPos(firstInstructionPos, 1);
+//                        mapView.setZoom(18, 1);
+//                        mapView.setMapRotation(360 - azimuth, firstInstructionPos, 1);
+//                        mapView.setTilt(30, 1);
 
                     } else {
-                        Log.d(Const.LOG_TAG, instruction.toString());
+                       // Log.d(Const.LOG_TAG, instruction.toString());
                         createRoutePoint(result.getPoints().get(instruction.getPointIndex()), instruction.getStreetName(),
                                 instruction.getTime(), instruction.getDistance(), instruction.getAction(), routeDataSource);
                     }
@@ -338,6 +372,17 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
         	shortestPathRunning = true;
         	task.execute();
         }
+    }
+
+    protected String secondsToHours(int sec){
+        int hours = sec / 3600,
+                remainder = sec % 3600,
+                minutes = remainder / 60,
+                seconds = remainder % 60;
+
+        return ( (hours < 10 ? "0" : "") + hours
+                + "h" + (minutes < 10 ? "0" : "") + minutes
+                + "m" + (seconds< 10 ? "0" : "") + seconds+"s" );
     }
 
     protected void createRoutePoint(MapPos pos, String name,
@@ -366,8 +411,8 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
 			break;
 		case ROUTING_ACTION_NO_TURN:
         case ROUTING_ACTION_GO_STRAIGHT:
-            style = instructionUp;
-            str = "continue";
+//            style = instructionUp;
+//            str = "continue";
             break;
         case ROUTING_ACTION_REACH_VIA_LOCATION:
             style = instructionUp;
@@ -392,11 +437,13 @@ public class OfflineRoutingActivity extends VectorMapSampleBaseActivity {
 			break;
         }
 
-        Marker marker = new Marker(pos, style);
-        BalloonPopup popup2 = new BalloonPopup(marker, balloonPopupStyleBuilder.buildStyle(),
-                str, "");
-        ds.add(popup2);
-        ds.add(marker);
+        if (!str.equals("")){
+            Marker marker = new Marker(pos, style);
+            BalloonPopup popup2 = new BalloonPopup(marker, balloonPopupStyleBuilder.buildStyle(),
+                    str, "");
+            ds.add(popup2);
+            ds.add(marker);
+        }
     }
 
     // creates Nutiteq line from GraphHopper response
