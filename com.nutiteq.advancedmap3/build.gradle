@@ -24,8 +24,12 @@ android {
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
+//            java {
+//                exclude '**/OfflineRoutingActivity.java'
+//            }
         }
         instrumentTest.setRoot('tests')
+
     }
 
     buildTypes {
@@ -59,6 +63,12 @@ tasks.create(name: 'exportLibs', type: Copy) {
 
 
 dependencies {
-    // to include nutiteq SDK from online repository see hellomap gradle conf
-    compile files('libs/nutiteq-maps-sdk.jar')
+    // use bundled files
+    // compile files('libs/nutiteq-maps-sdk.jar')
+
+    // or use online repository - make sure it has latest version (there can be several updates per day)
+    compile ('com.nutiteq:nutiteq-sdk:snapshot@aar'){
+        changing true
+    }
+
 }
