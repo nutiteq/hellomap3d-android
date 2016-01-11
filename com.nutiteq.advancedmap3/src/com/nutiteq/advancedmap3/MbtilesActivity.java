@@ -46,10 +46,9 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
         if(metaData.has_key("format")){
             format = tileDataSource.getMetaData().get("format");    
         }
-        
-        
-        if ("mbvt".equals(format)) {
-            UnsignedCharVector styleBytes = AssetUtils.loadBytes("osmbright.zip");
+
+        if ("pbf".equals(format) || "ntvt".equals(format)) {
+            UnsignedCharVector styleBytes = AssetUtils.loadBytes("mongolie-style.zip");
             MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
             VectorTileDecoder vectorTileDecoder = new MBVectorTileDecoder(vectorTileStyleSet);
         	baseLayer = new VectorTileLayer(tileDataSource, vectorTileDecoder);
@@ -58,7 +57,7 @@ public class MbtilesActivity extends MapSampleBaseActivity implements
         }
         mapView.getLayers().add(baseLayer);
 
-        mapView.getOptions().setZoomRange(new MapRange(0, 18));
+        mapView.getOptions().setZoomRange(new MapRange(0, 23));
                 
         // Fit to bounds
         DisplayMetrics displaymetrics = new DisplayMetrics();
