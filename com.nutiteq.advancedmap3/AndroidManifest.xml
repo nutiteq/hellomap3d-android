@@ -43,8 +43,9 @@
         <activity android:name=".ClusteredRandomPointsActivity" />
         <activity android:name=".ClusteredGeoJsonActivity" />
         <activity android:name="com.nutiteq.filepicker.FilePicker" />
-        <activity android:name=".MyLocationActivity" >
-        </activity>
+        <activity android:name=".MyLocationActivity" />
+        <activity android:name=".OfflineRoutingActivity" />
+
     </application>
 
 </manifest>
