@@ -124,23 +124,24 @@ public class Overlays2DActivity extends VectorMapSampleBaseActivity {
         polygonPoses.add(proj.fromWgs84(new MapPos(24.660199, 59.420677)));
         polygonPoses.add(proj.fromWgs84(new MapPos(24.656552, 59.420175)));
         polygonPoses.add(proj.fromWgs84(new MapPos(24.654010, 59.421472)));
-        // Create polygon holes poses
+        // Create 2 polygon holes
+        MapPosVector holePoses1 = new MapPosVector();
+        holePoses1.add(proj.fromWgs84(new MapPos(24.658409, 59.420522)));
+        holePoses1.add(proj.fromWgs84(new MapPos(24.662207, 59.418896)));
+        holePoses1.add(proj.fromWgs84(new MapPos(24.662207, 59.417411)));
+        holePoses1.add(proj.fromWgs84(new MapPos(24.659524, 59.417171)));
+        holePoses1.add(proj.fromWgs84(new MapPos(24.657615, 59.419834)));
+        MapPosVector holePoses2 = new MapPosVector();
+        holePoses2.add(proj.fromWgs84(new MapPos(24.665640, 59.421243)));
+        holePoses2.add(proj.fromWgs84(new MapPos(24.668923, 59.419463)));
+        holePoses2.add(proj.fromWgs84(new MapPos(24.662893, 59.419365)));
         MapPosVectorVector polygonHoles = new MapPosVectorVector();
-        polygonHoles.add(new MapPosVector());
-        polygonHoles.get(0).add(proj.fromWgs84(new MapPos(24.658409, 59.420522)));
-        polygonHoles.get(0).add(proj.fromWgs84(new MapPos(24.662207, 59.418896)));
-        polygonHoles.get(0).add(proj.fromWgs84(new MapPos(24.662207, 59.417411)));
-        polygonHoles.get(0).add(proj.fromWgs84(new MapPos(24.659524, 59.417171)));
-        polygonHoles.get(0).add(proj.fromWgs84(new MapPos(24.657615, 59.419834)));
-        polygonHoles.add(new MapPosVector());
-        polygonHoles.get(1).add(proj.fromWgs84(new MapPos(24.665640, 59.421243)));
-        polygonHoles.get(1).add(proj.fromWgs84(new MapPos(24.668923, 59.419463)));
-        polygonHoles.get(1).add(proj.fromWgs84(new MapPos(24.662893, 59.419365)));
+        polygonHoles.add(holePoses1);
+        polygonHoles.add(holePoses2);
         // Add polygon
         Polygon polygon = new Polygon(polygonPoses, polygonHoles, polygonStyleBuilder.buildStyle());
         polygon.setMetaDataElement("ClickText", "Polygon");
         vectorDataSource1.add(polygon);
-
 
         // Create text style
         TextStyleBuilder textStyleBuilder = new TextStyleBuilder();

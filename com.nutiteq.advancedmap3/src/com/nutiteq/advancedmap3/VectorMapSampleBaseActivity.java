@@ -22,12 +22,14 @@ import com.nutiteq.wrappedcommons.UnsignedCharVector;
  */
 public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 
+	public static final String MAIN_STYLE = "nutibright-v2a";
+	public static final String MAIN_STYLE_FILE = MAIN_STYLE + ".zip";
 	protected TileDataSource vectorTileDataSource;
     protected MBVectorTileDecoder vectorTileDecoder;
     protected boolean persistentTileCache = false;
     
     // Style parameters
-    protected String vectorStyleName = "nutibright"; // default style name, each style has corresponding .zip asset
+    protected String vectorStyleName = MAIN_STYLE; // default style name, each style has corresponding .zip asset
     protected String vectorStyleLang = "en"; // default map language
 
     @Override
@@ -53,9 +55,8 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
    	
     	Menu styleMenu = menu.addSubMenu("Style");
     	addStyleMenuOption(styleMenu, "Basic", "basic");
-    	addStyleMenuOption(styleMenu, "NutiBright 2D", "nutibright");
+    	addStyleMenuOption(styleMenu, "NutiBright 2D", "nutibright-v2");
     	addStyleMenuOption(styleMenu, "NutiBright 3D", "nutibright3d");
-    	addStyleMenuOption(styleMenu, "OSM Bright Chinese", "osmbright-heilight");
     	addStyleMenuOption(styleMenu, "Loose Leaf", "looseleaf");
 
     	return true;
@@ -109,7 +110,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
     	String styleAssetName = vectorStyleName + ".zip";
     	boolean styleBuildings3D = false;
     	if (vectorStyleName.equals("nutibright3d")) {
-    		styleAssetName = "nutibright.zip";
+    		styleAssetName = MAIN_STYLE_FILE;
     		styleBuildings3D = true;
     	}
         UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
@@ -122,7 +123,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
             vectorTileDecoder.setStyleParameter("lang", vectorStyleLang);
             
             // OSM Bright style set supports choosing between 2d/3d buildings. Set corresponding parameter.
-            if (styleAssetName.equals("nutibright.zip")) {
+            if (styleAssetName.equals(MAIN_STYLE_FILE)) {
             	vectorTileDecoder.setStyleParameter("buildings3d", styleBuildings3D);
             	vectorTileDecoder.setStyleParameter("markers3d",styleBuildings3D ? "1" : "0");
             	vectorTileDecoder.setStyleParameter("texts3d",styleBuildings3D ? "1" : "0");

@@ -38,7 +38,6 @@
         <activity android:name=".AerialMapActivity" />
         <activity android:name=".CustomRasterDataSourceActivity" />
         <activity android:name=".CustomPopupActivity" />
-        <activity android:name=".OfflineRoutingActivity" />
         <activity android:name=".MbtilesActivity" />
         <activity android:name=".WmsMapActivity" />
         <activity android:name=".ClusteredRandomPointsActivity" />
