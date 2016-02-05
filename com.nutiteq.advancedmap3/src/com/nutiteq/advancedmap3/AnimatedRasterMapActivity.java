@@ -21,6 +21,7 @@ import com.nutiteq.layers.TileLoadListener;
  */
 public class AnimatedRasterMapActivity extends VectorMapSampleBaseActivity {
 
+	private RasterTileLayer animatedRasterTileLayer;
     private static final ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();
     private static final int ANIMATION_FRAME_TIME_MS = 300;
 
@@ -44,7 +45,7 @@ public class AnimatedRasterMapActivity extends VectorMapSampleBaseActivity {
         MyAnimatedTileDataSource animatedRasterTileDataSource = new MyAnimatedTileDataSource(0, 24, animatedRasterTileDataSources);
         
         // Initialize an animated raster layer
-        final RasterTileLayer animatedRasterTileLayer = new RasterTileLayer( animatedRasterTileDataSource);
+        animatedRasterTileLayer = new RasterTileLayer( animatedRasterTileDataSource);
         animatedRasterTileLayer.setSynchronizedRefresh(true);
         animatedRasterTileLayer.setPreloading(false);
         // Set the tile load listener, which will be used to change the animation frames
@@ -71,8 +72,14 @@ public class AnimatedRasterMapActivity extends VectorMapSampleBaseActivity {
             
             public void onPreloadingTilesLoaded() {}
         });
+
         // Add the previous raster layer to the map
         mapView.getLayers().add(animatedRasterTileLayer);
-        
+    }
+    
+    @Override
+    public void onDestroy() {
+    	animatedRasterTileLayer.setTileLoadListener(null);
+    	super.onDestroy();
     }
 }

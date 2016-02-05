@@ -82,10 +82,10 @@ public class ClusteredGeoJsonActivity extends VectorMapSampleBaseActivity {
             JSONObject json = new JSONObject(jsonStr);
 
             GeoJSONGeometryReader geoJsonParser = new GeoJSONGeometryReader();
-            BalloonPopupStyleBuilder balloonPopupStyleBuilder = new BalloonPopupStyleBuilder();
+            BalloonPopupStyle balloonPopupStyle = new BalloonPopupStyleBuilder().buildStyle();
 
             JSONArray features = json.getJSONArray("features");
-            for(int i=0;i<features.length();i++) {
+            for (int i = 0; i < features.length(); i++) {
                 JSONObject feature = (JSONObject) features.get(i);
                 JSONObject geometry = feature.getJSONObject("geometry");
 
@@ -97,13 +97,12 @@ public class ClusteredGeoJsonActivity extends VectorMapSampleBaseActivity {
                 // create popup for each object
                 BalloonPopup popup = new BalloonPopup(
 					ntGeom,
-					balloonPopupStyleBuilder.buildStyle(),
-                        properties.getString("Capital"),
-                        properties.getString("Country"));
+					balloonPopupStyle,
+                    properties.getString("Capital"),
+                    properties.getString("Country"));
 
                 // add all properties as MetaData, so you can use it with click handling
-                for(
-				Iterator<String> j = properties.keys(); j.hasNext();){
+                for (Iterator<String> j = properties.keys(); j.hasNext();){
                     String key = j.next();
                     String val = properties.getString(key);
                     popup.setMetaDataElement(key,val);

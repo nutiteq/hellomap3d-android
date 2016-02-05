@@ -276,6 +276,12 @@ public class PackageManagerActivity extends ListActivity {
 	}
 	
 	@Override
+	public void onDestroy() {
+		packageManager.setPackageManagerListener(null);
+		super.onDestroy();
+	}
+	
+	@Override
 	public void onBackPressed() {
 		if (currentFolder.length() == 0) {
 			super.onBackPressed();

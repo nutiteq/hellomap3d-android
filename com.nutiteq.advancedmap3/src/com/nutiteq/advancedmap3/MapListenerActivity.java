@@ -33,4 +33,10 @@ public class MapListenerActivity extends Overlays2DActivity {
         // it needs the data source for balloons
         mapView.setMapEventListener(new MyMapEventListener(mapView, vectorDataSource));
     }
+    
+    @Override
+	public void onDestroy() {
+    	mapView.setMapEventListener(null);
+    	super.onDestroy();
+    }
 }
