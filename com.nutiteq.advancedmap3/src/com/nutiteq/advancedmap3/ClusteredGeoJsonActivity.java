@@ -35,7 +35,7 @@ import java.util.Iterator;
  */
 public class ClusteredGeoJsonActivity extends VectorMapSampleBaseActivity {
 
-    class MyClusterElementBuilder extends ClusterElementBuilder {
+    static class MyClusterElementBuilder extends ClusterElementBuilder {
         BalloonPopupStyle balloonPopupStyle;
 
         public MyClusterElementBuilder(){
