@@ -99,6 +99,11 @@ public class Overlays3DActivity extends VectorMapSampleBaseActivity {
         mapView.setFocusPos(modelPos, 1);
         mapView.setZoom(14, 2);
         mapView.setTilt(50, 1);
-        
+    }
+    
+    @Override
+    public void onDestroy() {
+        mapView.setMapEventListener(null);
+    	super.onDestroy();
     }
 }

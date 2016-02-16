@@ -23,7 +23,7 @@ public class OfflineVectorMapActivity extends VectorMapSampleBaseActivity {
         super.onCreate(savedInstanceState);
         
         // Limit zoom range, as we have tiles only up to level 5
-        mapView.getOptions().setZoomRange(new MapRange(0,20));
+        mapView.getOptions().setZoomRange(new MapRange(0,6));
         mapView.setZoom(3, 0);
     }
     

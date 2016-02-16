@@ -24,6 +24,9 @@ import com.nutiteq.wrappedcommons.MapPosVector;
  * Make sure your app has location permission in Manifest file
  */
 public class MyLocationActivity extends VectorMapSampleBaseActivity {
+	
+	private LocationManager locationManager;
+	private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,6 @@ public class MyLocationActivity extends VectorMapSampleBaseActivity {
         // Add the previous vector layer to the map
         mapView.getLayers().add(vectorLayer);
 
-
         // style for GPS My Location circle
         PolygonStyleBuilder polygonStyleBuilder = new PolygonStyleBuilder();
         polygonStyleBuilder.setColor(new Color(0xAAFF0000));
@@ -53,7 +55,7 @@ public class MyLocationActivity extends VectorMapSampleBaseActivity {
 
         vectorDataSource.add(locationCircle);
 
-        final LocationListener locationListener = new LocationListener(){
+        locationListener = new LocationListener() {
 
             @Override
             public void onLocationChanged(Location location) {
@@ -76,22 +78,23 @@ public class MyLocationActivity extends VectorMapSampleBaseActivity {
             public void onProviderDisabled(String s) {}
         };
 
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // user has maybe disabled location services / GPS
-        if(locationManager.getProviders(true).size() == 0){
+        if (locationManager.getProviders(true).size() == 0) {
             Toast.makeText(this, "Cannot get location, no location providers enabled. Check device settings", Toast.LENGTH_LONG).show();
         }
 
         // use all enabled device providers with same parameters
-        for(String provider : locationManager.getProviders(true)){
+        for (String provider : locationManager.getProviders(true)) {
             Log.debug("adding location provider " + provider);
             locationManager.requestLocationUpdates(provider, 1000, 50, locationListener);
         }
-
-
-
-
-
+    }
+    
+    @Override
+    public void onDestroy() {
+    	locationManager.removeUpdates(locationListener);
+    	super.onDestroy();
     }
 }
