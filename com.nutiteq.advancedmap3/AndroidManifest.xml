@@ -45,6 +45,9 @@
         <activity android:name="com.nutiteq.filepicker.FilePicker" />
         <activity android:name=".MyLocationActivity" />
         <activity android:name=".OfflineRoutingActivity" />
+        <activity android:name=".CartoDBSQLActivity" />
+        <activity android:name=".CartoDBUTFGridActivity" />
+
 
     </application>
 
