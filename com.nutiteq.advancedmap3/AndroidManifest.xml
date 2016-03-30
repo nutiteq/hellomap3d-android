@@ -47,7 +47,8 @@
         <activity android:name=".OfflineRoutingActivity" />
         <activity android:name=".CartoDBSQLActivity" />
         <activity android:name=".CartoDBUTFGridActivity" />
-
+        <activity android:name=".CartoDBTorqueActivity" />
+        <activity android:name=".CartoDBVectorTileActivity" />
 
     </application>
 

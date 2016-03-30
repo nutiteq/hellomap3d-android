@@ -37,7 +37,11 @@ public class LauncherList extends ListActivity{
             {ClusteredRandomPointsActivity.class,null},
             {ClusteredGeoJsonActivity.class,null},
             {MyLocationActivity.class,null},
-            {OfflineRoutingActivity.class,null}
+            {OfflineRoutingActivity.class,null},
+            {CartoDBSQLActivity.class,null},
+            {CartoDBUTFGridActivity.class,null},
+            {CartoDBTorqueActivity.class, null},
+            {CartoDBVectorTileActivity.class, null}
 
     };
 
