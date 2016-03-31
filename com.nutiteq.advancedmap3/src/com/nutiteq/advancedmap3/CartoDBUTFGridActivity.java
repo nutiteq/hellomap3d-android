@@ -2,16 +2,13 @@ package com.nutiteq.advancedmap3;
 
 import android.os.Bundle;
 
-import com.nutiteq.advancedmap3.datasource.CartoDBSQLDataSource;
 import com.nutiteq.advancedmap3.listener.MyMapEventListener;
 import com.nutiteq.core.MapPos;
 import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.HTTPTileDataSource;
 import com.nutiteq.datasources.LocalVectorDataSource;
-import com.nutiteq.graphics.Color;
 import com.nutiteq.layers.UTFGridRasterTileLayer;
 import com.nutiteq.layers.VectorLayer;
-import com.nutiteq.styles.PointStyleBuilder;
 
 /**
  * A sample demonstrating how to use CartoDB Maps API with Raster tiles and UTFGrid
@@ -62,5 +59,12 @@ public class CartoDBUTFGridActivity extends VectorMapSampleBaseActivity {
         // finally animate map to the content area
         mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-74.0059, 40.7127)), 1); // NYC
         mapView.setZoom(15, 1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mapView.setMapEventListener(null);
+
+        super.onDestroy();
     }
 }
