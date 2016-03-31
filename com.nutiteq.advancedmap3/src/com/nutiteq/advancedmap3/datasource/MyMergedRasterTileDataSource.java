@@ -38,8 +38,8 @@ public class MyMergedRasterTileDataSource extends TileDataSource {
 	    }
 	    
 	    // Combine the bitmaps
-	    com.nutiteq.graphics.Bitmap tileBitmap1 = new com.nutiteq.graphics.Bitmap(tileData1.getData(), false);
-	    com.nutiteq.graphics.Bitmap tileBitmap2 = new com.nutiteq.graphics.Bitmap(tileData2.getData(), false);
+	    com.nutiteq.graphics.Bitmap tileBitmap1 = com.nutiteq.graphics.Bitmap.createFromCompressed(tileData1.getData(), false);
+	    com.nutiteq.graphics.Bitmap tileBitmap2 = com.nutiteq.graphics.Bitmap.createFromCompressed(tileData2.getData(), false);
 	    Bitmap bitmap1 = BitmapUtils.createAndroidBitmapFromBitmap(tileBitmap1);
 	    Bitmap bitmap2 = BitmapUtils.createAndroidBitmapFromBitmap(tileBitmap2);
 	    
