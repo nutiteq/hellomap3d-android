@@ -35,7 +35,7 @@ public class CartoDBSQLActivity extends VectorMapSampleBaseActivity {
         pointStyleBuilder.setSize(10);
 
         // Initialize a local vector data source
-        CartoDBSQLDataSource vectorDataSource1 = new CartoDBSQLDataSource(baseProjection,"https://mforrest.cartodb.com/api/v2/sql","SELECT cartodb_id,the_geom_webmercator AS the_geom,name,address,bikes,slot,field_7,field_8,field_9,field_16,field_17,field_18 FROM stations_1 WHERE !bbox!",pointStyleBuilder.buildStyle());
+        CartoDBSQLDataSource vectorDataSource1 = new CartoDBSQLDataSource(baseProjection,"https://nutiteq.cartodb.com/api/v2/sql","SELECT cartodb_id,the_geom_webmercator AS the_geom,name,address,bikes,slot,field_7,field_8,field_9,field_16,field_17,field_18 FROM stations_1 WHERE !bbox!",pointStyleBuilder.buildStyle());
         // Initialize a vector layer with the previous data source
         VectorLayer vectorLayer1 = new VectorLayer(vectorDataSource1);
         // Add the previous vector layer to the map
