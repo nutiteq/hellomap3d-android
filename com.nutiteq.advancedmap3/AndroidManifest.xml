@@ -49,6 +49,7 @@
         <activity android:name=".CartoDBUTFGridActivity" />
         <activity android:name=".CartoDBTorqueActivity" />
         <activity android:name=".CartoDBVectorTileActivity" />
+        <activity android:name=".CartoDBRasterActivity" />
 
     </application>
 
