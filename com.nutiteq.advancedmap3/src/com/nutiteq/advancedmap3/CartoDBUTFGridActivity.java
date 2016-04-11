@@ -48,61 +48,20 @@ public class CartoDBUTFGridActivity extends VectorMapSampleBaseActivity {
             String statTag = "3c6f224a-c6ad-11e5-b17e-0e98b61680bf";
             String[] columns = new String[]{"name","field_9","slot"};
             String cartoCss =
-                    "/** category visualization */\n" +
-                    "\n" +
-                    "#stations_1 {\n" +
-                    "   marker-fill-opacity: 0.9;\n" +
-                    "   marker-line-color: #FFF;\n" +
-                    "   marker-line-width: 2;\n" +
-                    "   marker-line-opacity: 1;\n" +
-                    "   marker-placement: point;\n" +
-                    "   marker-type: ellipse;\n" +
-                    "   marker-width: 10;\n" +
-                    "   marker-allow-overlap: true;\n" +
-                    "}\n" +
-                    "\n" +
-                    "#stations_1[field_7=\"In Service\"] {\n" +
-                    "   marker-fill: #0F3B82;\n" +
-                    "}\n" +
-                    "#stations_1[field_7=\"Not In Service\"] {\n" +
-                    "   marker-fill: #aaaaaa;\n" +
-                    "}\n" +
-                    "\n" +
-                    "#stations_1 [ field_9 = 200] {\n" +
-                    "   marker-width: 80.0;\n" +
-                    "}\n" +
-                    "\n" +
-                    "#stations_1 [ field_9 <= 49] {\n" +
-                    "   marker-width: 25.0;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 38] {\n" +
-                    "   marker-width: 22.8;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 34] {\n" +
-                    "   marker-width: 20.6;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 29] {\n" +
-                    "   marker-width: 18.3;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 25] {\n" +
-                    "   marker-width: 16.1;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 20.5] {\n" +
-                    "   marker-width: 13.9;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 16] {\n" +
-                    "   marker-width: 11.7;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 12] {\n" +
-                    "   marker-width: 9.4;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 8] {\n" +
-                    "   marker-width: 7.2;\n" +
-                    "}\n" +
-                    "#stations_1 [ field_9 <= 4] {\n" +
-                    "   marker-width: 5.0;\n" +
-                    "}";
-
+                    "#stations_1{marker-fill-opacity:0.9;marker-line-color:#FFF;marker-line-width:2;marker-line-opacity:1;marker-placement:point;marker-type:ellipse;marker-width:10;marker-allow-overlap:true;}\n" +
+                            "#stations_1[field_7='In Service']{marker-fill:#0F3B82;}\n" +
+                            "#stations_1[field_7='Not In Service']{marker-fill:#aaaaaa;}\n" +
+                            "#stations_1 [ field_9 = 200]{marker-width:80.0;}\n" +
+                            "#stations_1 [ field_9 <= 49]{marker-width:25.0;}\n" +
+                            "#stations_1 [ field_9 <= 38]{marker-width:22.8;}\n" +
+                            "#stations_1 [ field_9 <= 34]{marker-width:20.6;}\n" +
+                            "#stations_1 [ field_9 <= 29]{marker-width:18.3;}\n" +
+                            "#stations_1 [ field_9 <= 25]{marker-width:16.1;}\n" +
+                            "#stations_1 [ field_9 <= 20.5]{marker-width:13.9;}\n" +
+                            "#stations_1 [ field_9 <= 16]{marker-width:11.7;}\n" +
+                            "#stations_1 [ field_9 <= 12]{marker-width:9.4;}\n" +
+                            "#stations_1 [ field_9 <= 8]{marker-width:7.2;}\n" +
+                            "#stations_1 [ field_9 <= 4]{marker-width:5.0;}";
 
             // you probably do not need to change much of below
             JSONObject configJson = new JSONObject();
