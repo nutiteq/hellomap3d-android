@@ -3,16 +3,10 @@ package com.nutiteq.advancedmap3;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.nutiteq.advancedmap3.listener.MyMapEventListener;
-import com.nutiteq.core.MapPos;
-import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.HTTPTileDataSource;
-import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.datasources.PersistentCacheTileDataSource;
 import com.nutiteq.datasources.TileDataSource;
 import com.nutiteq.layers.TorqueTileLayer;
-import com.nutiteq.layers.UTFGridRasterTileLayer;
-import com.nutiteq.layers.VectorLayer;
 import com.nutiteq.vectortiles.CartoCSSStyleSet;
 import com.nutiteq.vectortiles.TorqueTileDecoder;
 
@@ -30,7 +24,7 @@ public class CartoDBTorqueActivity extends VectorMapSampleBaseActivity {
     private static final ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();
     private static final long TORQUE_FRAMETIME_MS = 100;
     private TorqueTileLayer torqueTileLayer;
-    private boolean inProgress;
+    private boolean stopped;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,30 +106,30 @@ public class CartoDBTorqueActivity extends VectorMapSampleBaseActivity {
         mapView.getLayers().add(torqueTileLayer);
 
         // Start updating frames for animation
-
-        synchronized (worker) {
-            if (!inProgress) {
-                inProgress = true;
-               worker.schedule(task, TORQUE_FRAMETIME_MS, TimeUnit.MILLISECONDS);
-            }
-        }
+        worker.schedule(task, TORQUE_FRAMETIME_MS, TimeUnit.MILLISECONDS);
 
         mapView.setZoom(1, 0);
     }
 
     @Override
     protected void onStop() {
+        synchronized (worker) {
+            stopped = true;
+        }
+
         super.onStop();
     }
 
     private Runnable task = new Runnable() {
         public void run() {
-                synchronized (worker) {
-                        inProgress = false;
-                        torqueTileLayer.setFrameNr((torqueTileLayer.getFrameNr()+1) % torqueTileLayer.getFrameCount());
-                        Log.d(Const.LOG_TAG, "torque frame " + torqueTileLayer.getFrameNr()+ " of "+torqueTileLayer.getFrameCount());
-                        worker.schedule(task, TORQUE_FRAMETIME_MS, TimeUnit.MILLISECONDS);
+            synchronized (worker) {
+                int frameNr = (torqueTileLayer.getFrameNr()+1) % torqueTileLayer.getFrameCount();
+                torqueTileLayer.setFrameNr(frameNr);
+                Log.d(Const.LOG_TAG, "torque frame " + torqueTileLayer.getFrameNr()+ " of "+torqueTileLayer.getFrameCount());
+                if (!stopped) {
+                    worker.schedule(task, TORQUE_FRAMETIME_MS, TimeUnit.MILLISECONDS);
                 }
+            }
         }
     };
 

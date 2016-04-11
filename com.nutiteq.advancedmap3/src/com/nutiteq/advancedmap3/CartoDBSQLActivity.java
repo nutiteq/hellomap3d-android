@@ -1,7 +1,5 @@
 package com.nutiteq.advancedmap3;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.nutiteq.advancedmap3.datasource.CartoDBSQLDataSource;
@@ -11,11 +9,7 @@ import com.nutiteq.core.MapRange;
 import com.nutiteq.datasources.LocalVectorDataSource;
 import com.nutiteq.graphics.Color;
 import com.nutiteq.layers.VectorLayer;
-import com.nutiteq.styles.MarkerStyle;
-import com.nutiteq.styles.MarkerStyleBuilder;
 import com.nutiteq.styles.PointStyleBuilder;
-import com.nutiteq.utils.BitmapUtils;
-import com.nutiteq.vectorelements.Marker;
 
 /**
  * A sample demonstrating how to use CartoDB SQL API to get data
@@ -59,5 +53,12 @@ public class CartoDBSQLActivity extends VectorMapSampleBaseActivity {
         // finally animate map to the marker
         mapView.setFocusPos(baseProjection.fromWgs84(new MapPos(-74.0059, 40.7127)), 1);
         mapView.setZoom(15, 1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mapView.setMapEventListener(null);
+
+        super.onDestroy();
     }
 }
