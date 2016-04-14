@@ -3,5 +3,6 @@
 
     <string name="app_name">Nutiteq 3</string>
     <string name="action_settings">Actions</string>
+    <string name="layer_group_id_error">Sorry but I can\'t get layerGroupID.</string>
 
 </resources>
