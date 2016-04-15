@@ -41,7 +41,8 @@ public class LauncherList extends ListActivity{
             {CartoDBSQLActivity.class,null},
             {CartoDBUTFGridActivity.class,null},
             {CartoDBTorqueActivity.class, null},
-            {CartoDBVectorTileActivity.class, null}
+            {CartoDBVectorTileActivity.class, null},
+            {CartoDBRasterActivity.class, null}
 
     };
 
