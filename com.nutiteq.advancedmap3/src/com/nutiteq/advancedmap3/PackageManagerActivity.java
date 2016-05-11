@@ -117,9 +117,9 @@ public class PackageManagerActivity extends ListActivity {
 			if (pkg.packageInfo != null) {
 				String status = "available";
 				if (pkg.packageInfo.getSize().longValue() < 1024 * 1024) {
-					status += " (<1MB)";
+					status += " v." + pkg.packageInfo.getVersion()+" (<1MB)";
 				} else {
-					status += " (" + pkg.packageInfo.getSize().longValue() / 1024 / 1024 + "MB)";				
+					status += " v." + pkg.packageInfo.getVersion()+" (" + pkg.packageInfo.getSize().longValue() / 1024 / 1024 + "MB)";
 				}
 
 				// Check if the package is downloaded/is being downloaded (so that status is not null)
