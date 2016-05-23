@@ -50,6 +50,7 @@
         <activity android:name=".CartoDBTorqueActivity" />
         <activity android:name=".CartoDBVectorTileActivity" />
         <activity android:name=".CartoDBRasterActivity" />
+        <activity android:name=".MapZenActivity" />
 
     </application>
 
