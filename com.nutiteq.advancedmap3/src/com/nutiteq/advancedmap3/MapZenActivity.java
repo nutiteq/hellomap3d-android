@@ -42,6 +42,9 @@ public class MapZenActivity extends MapSampleBaseActivity {
         // use "name:en" to get English names where available, "name" is for generic local names
         vectorTileDecoder.setStyleParameter("name", "name:en");
 
+        // try to set client-side buffer, as mapzen does not have it in tiles
+        vectorTileDecoder.setBuffering(1.0f/64.0f);
+
         // Create vector layer
         baseLayer = new VectorTileLayer(baseRasterTileDataSource, vectorTileDecoder);
         mapView.getLayers().add(baseLayer);
