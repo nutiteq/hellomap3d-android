@@ -7,6 +7,7 @@ com.nutiteq.layers
 com.nutiteq.packagemanager
 com.nutiteq.projections
 com.nutiteq.renderers.components
+com.nutiteq.routing
 com.nutiteq.styles
 com.nutiteq.ui
 com.nutiteq.utils
