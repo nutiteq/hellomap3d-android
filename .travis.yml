@@ -22,3 +22,6 @@ android:
     # if you need to run emulator(s) during your tests
     # - sys-img-armeabi-v7a-android-19
     # - sys-img-x86-android-17
+
+env:
+- GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
