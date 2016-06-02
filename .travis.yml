@@ -23,6 +23,11 @@ android:
     # - sys-img-armeabi-v7a-android-19
     # - sys-img-x86-android-17
 
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
 env:
 - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
 sudo: false
@@ -33,3 +38,4 @@ cache:
     - $HOME/.gradle/daemon
     - $HOME/.gradle/native
     - $HOME/.gradle/wrapper
+    
