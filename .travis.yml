@@ -25,3 +25,11 @@ android:
 
 env:
 - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
+sudo: false
+cache:
+  directories:
+    - $HOME/.gradle/caches/2.10
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
