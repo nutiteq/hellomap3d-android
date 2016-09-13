@@ -1,0 +1,41 @@
+language: android
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    # - platform-tools
+    - tools
+
+    # The BuildTools version used by your project
+    - build-tools-23.0.2
+    
+    # The SDK version used to compile your project
+    - android-19
+    
+    # Additional components
+    # - extra-google-google_play_services
+    - extra-google-m2repository
+    # - extra-android-m2repository
+    # - addon-google_apis-google-19
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    # - sys-img-armeabi-v7a-android-19
+    # - sys-img-x86-android-17
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+env:
+- GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
+sudo: false
+cache:
+  directories:
+    - $HOME/.gradle/caches/2.10
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+    

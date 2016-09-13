@@ -3,6 +3,8 @@
 
 This project shows API and features of Nutiteq Maps SDK 3.0.
 
+[![Build Status](https://travis-ci.org/nutiteq/hellomap3d-android.svg?branch=master)](https://travis-ci.org/nutiteq/hellomap3d-android)
+
 ## Download and documentation
   * Download - get libs/ folder from any sample project
   * [Browse API JavaDoc](http://nutiteq.github.io/hellomap3d-android/)

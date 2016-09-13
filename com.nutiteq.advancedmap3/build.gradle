@@ -32,7 +32,9 @@ android {
 //            }
         }
         instrumentTest.setRoot('tests')
-
+        lintOptions {
+            abortOnError false
+        }
     }
 
     buildTypes {
@@ -62,7 +64,6 @@ dependencies {
 //    compile ('com.nutiteq:nutiteq-sdk:snapshot@aar'){
 //        changing true
 //    }
-    compile 'com.nutiteq:nutiteq-sdk:3.3.0@aar'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    compile 'com.nutiteq:nutiteq-sdk:3.3.1@aar'
 
 }
