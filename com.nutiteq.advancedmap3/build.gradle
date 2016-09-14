@@ -65,5 +65,6 @@ dependencies {
 //        changing true
 //    }
     compile 'com.nutiteq:nutiteq-sdk:3.3.1@aar'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 
 }
