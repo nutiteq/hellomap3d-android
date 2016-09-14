@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 }
 
@@ -8,7 +8,7 @@ apply plugin: 'maven'
 
 allprojects {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             url "http://repository-nutiteq.forge.cloudbees.com/release/"
         }
