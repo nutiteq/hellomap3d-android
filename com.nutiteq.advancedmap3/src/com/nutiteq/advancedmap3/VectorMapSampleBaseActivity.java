@@ -117,21 +117,6 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 
     private void updateBaseLayer() {
 
-		/*
-    	String styleAssetName = vectorStyleName + ".zip";
-    	boolean styleBuildings3D = false;
-    	if (vectorStyleName.equals("nutibright3d")) {
-    		styleAssetName = MAIN_STYLE_FILE;
-    		styleBuildings3D = true;
-    	}
-        UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
-
-		// Create style set
-		MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
-
-		vectorTileDecoder = new MBVectorTileDecoder(vectorTileStyleSet);
-		*/
-
 		boolean styleBuildings3D = false;
 
 		if (vectorStyleName.contains(":")) {
@@ -140,10 +125,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 			String fileName = split[0];
 			String styleName = split[1];
 
-			String styleAssetName = fileName + ".zip";
-			UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
-			MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
-
+			MBVectorTileStyleSet vectorTileStyleSet = getStyleSet(fileName);
 			vectorTileDecoder = new MBVectorTileDecoder(vectorTileStyleSet, styleName);
 
 		} else {
@@ -153,10 +135,7 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 				styleBuildings3D = true;
 			}
 
-			String styleAssetName = vectorStyleName + ".zip";
-			UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
-			MBVectorTileStyleSet vectorTileStyleSet = new MBVectorTileStyleSet(styleBytes);
-
+			MBVectorTileStyleSet vectorTileStyleSet = getStyleSet(vectorStyleName);
 			vectorTileDecoder = new MBVectorTileDecoder(vectorTileStyleSet);
 		}
 
@@ -181,6 +160,12 @@ public class VectorMapSampleBaseActivity extends MapSampleBaseActivity {
 		baseLayer = new VectorTileLayer(vectorTileDataSource, vectorTileDecoder);
 		mapView.getLayers().insert(0, baseLayer);
     }
+
+	protected MBVectorTileStyleSet getStyleSet(String fileName) {
+		String styleAssetName = fileName + ".zip";
+		UnsignedCharVector styleBytes = AssetUtils.loadBytes(styleAssetName);
+		return new MBVectorTileStyleSet(styleBytes);
+	}
 
     protected TileDataSource createTileDataSource() {
         TileDataSource vectorTileDataSource = new NutiteqOnlineTileDataSource("nutiteq.osm");
