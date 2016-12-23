@@ -1,5 +1,9 @@
-# Android sample app with Nutiteq SDK 3.0
+# Update - new major map SDK version 4.0 available!
 
+Nutiteq joined CARTO in early 2016. We suggest to develop your app using newer **CARTO Mobile Map SDK** version 4.x. It has all same features, plus more. The new and much advanced sample code here: https://github.com/CartoDB/mobile-android-samples/ and developer Getting Started guidelines can be found from https://carto.com/docs/carto-engine/mobile-sdk/getting-started 
+
+
+# Android sample app with Nutiteq SDK 3.0 (old version)
 
 This project shows API and features of Nutiteq Maps SDK 3.0.
 
